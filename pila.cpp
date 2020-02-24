@@ -52,19 +52,6 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-void mostrarElemento(Nodo *&pila, int dato){
-    cout << "Sacando los elementos de la pila: ";
-    while(pila != NULL){
-        sacarPila(pila,dato);
-        if(pila != NULL){
-            cout << dato << " , ";
-        }
-        else {
-            cout << dato << ".";
-        }
-    }
-}
-
 void agregarPila(Nodo *&pila, int n){
     Nodo *nuevo_nodo = new Nodo();
     nuevo_nodo->dato = n;

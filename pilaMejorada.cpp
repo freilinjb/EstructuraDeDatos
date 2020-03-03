@@ -37,7 +37,7 @@ void Pila::mostrarDatos() {
     struct nodo *aux = inicio;
     int i = 0;
     while (aux != NULL) {
-    cout << "Dato No. " << i << " : " << aux->campo << endl;
+    cout << "[" << i << "] : " << aux->campo << endl;
     i ++;
     aux = aux->siguiente;
     }

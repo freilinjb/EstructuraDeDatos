@@ -5,7 +5,7 @@
 using namespace std;
 
 struct nodo {
-    int campo;
+    char campo;
     struct nodo *anterior, *siguiente;
 };
  
@@ -25,12 +25,13 @@ public:
  void mostrarDatos();
  int cuantosDatos();
   // funciones modificadoras
- void entrarDato(int dato);
- int sacarDato();
+ void entrarDato(char dato);
+ void entradaString();
+
+ char sacarDato();
  ~Pila();
 };
 
- // Esta función sale del cuerpo de la clase porque usa un ciclo. 
 void Pila::mostrarDatos() {
     cout << endl << "DATOS EN LA PILA" << endl;
     struct nodo *aux = inicio;
@@ -42,14 +43,39 @@ void Pila::mostrarDatos() {
     }
     cout << endl;
 
-    system("pause");
+    cout <<"Preciona Enter para continuar" << endl;
+
+    system("read");
+}
+
+void Pila::entradaString() {
+    fflush(stdin);
+    cin.ignore();
+    cin.clear();
+
+    string dato;
+    cout << "Ingrese la cadena de texto: ";
+    getline(cin, dato);
+
+    for(int i = dato.length(); i >= 0; i--){
+        entrarDato(dato[i]);
+    }
+
+    fflush(stdin);
+    cin.ignore();
+    cin.clear();
+
+    cout <<"Preciona Enter para continuar" << endl;
+    system("read");
+
+
 }
 
 int Pila::cuantosDatos() {
     return indicePila + 1;
 }
 
-void Pila::entrarDato(int dato) {
+void Pila::entrarDato(char dato) {
     struct nodo *nuevo = new struct nodo;
     nuevo->campo = dato;
     nuevo->siguiente = NULL;
@@ -63,10 +89,10 @@ void Pila::entrarDato(int dato) {
     indicePila ++;
 }
 
-int Pila::sacarDato() {
+char Pila::sacarDato() {
     struct nodo *aux = final;
     cout << "valor ";
-    int valor;
+    char valor;
     if (aux != NULL) {
     valor = aux->campo;
     if (final != NULL) 
@@ -91,23 +117,27 @@ Pila::~Pila() {
     }
 }
 
+
+
 int menu() {
     cout << endl << endl;
     cout << "**************************************" << endl;
-    cout << "0. Salir" << endl;
     cout << "1. Agregar un entero" << endl;
-    cout << "2. Sacar entero" << endl;
+    cout << "2. Sacar dato" << endl;
     cout << "3. Mostrar la cantidad" << endl;
     cout << "4. Mostrar datos de la pila" << endl;
     cout << "**************************************" << endl;
     int opcion;
+    cout << "Seleccione una opcion: ";
     cin >> opcion;
     return opcion;
 }
 
 main () {
     Pila pila1;
-    int respuesta,opcion;
+    string respuesta;
+    int opcion;
+
     opcion = -1;
     while (opcion != 0) {
     opcion = menu();
@@ -116,9 +146,7 @@ main () {
         cout << "Gracias por usar nuestro software" << endl;
         break;
         case 1:
-        cout << "indique valor a entrar:"; 
-        cin >> respuesta;
-        pila1.entrarDato(respuesta);
+        pila1.entradaString();
         break;
         case 2: 
         cout << "Dato obtenido:" << pila1.sacarDato() << endl;

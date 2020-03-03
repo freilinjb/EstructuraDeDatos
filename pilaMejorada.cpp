@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <stdlib.h>
 
 using namespace std;
@@ -111,23 +112,23 @@ main () {
     while (opcion != 0) {
     opcion = menu();
     switch (opcion) {
-    case 0:
-    cout << "Gracias por usar nuestro software" << endl;
-    break;
-    case 1:
-    cout << "indique valor a entrar:"; 
-    cin >> respuesta;
-    pila1.entrarDato(respuesta);
-    break;
-    case 2: 
-    cout << "Dato obtenido:" << pila1.sacarDato() << endl;
-    break;
-    case 3: 
-    cout << "Hay " << pila1.cuantosDatos() << " en la pila" << endl;
-    break;
-    case 4:
-    pila1.mostrarDatos();
-    }
+        case 0:
+        cout << "Gracias por usar nuestro software" << endl;
+        break;
+        case 1:
+        cout << "indique valor a entrar:"; 
+        cin >> respuesta;
+        pila1.entrarDato(respuesta);
+        break;
+        case 2: 
+        cout << "Dato obtenido:" << pila1.sacarDato() << endl;
+        break;
+        case 3: 
+        cout << "Hay " << pila1.cuantosDatos() << " en la pila" << endl;
+        break;
+        case 4:
+        pila1.mostrarDatos();
+        }
     }
     return 0;
 }

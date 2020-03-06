@@ -21,10 +21,10 @@ public:
     inicio = NULL;
     final = NULL; 
  }; // constructor
-  // funciones analizadoras
+
  void mostrarDatos();
  int cuantosDatos();
-  // funciones modificadoras
+  
  void entrarDato(char dato);
  void entradaString();
 
@@ -42,10 +42,6 @@ void Pila::mostrarDatos() {
     aux = aux->siguiente;
     }
     cout << endl;
-
-    cout <<"Preciona Enter para continuar" << endl;
-
-    system("read");
 }
 
 void Pila::entradaString() {
@@ -60,15 +56,13 @@ void Pila::entradaString() {
     for(int i = dato.length(); i >= 0; i--){
         entrarDato(dato[i]);
     }
+    // for(int i = 0; i < dato.length(); i++){
+    //     entrarDato(dato[i]);
+    // }
 
     fflush(stdin);
     cin.ignore();
     cin.clear();
-
-    cout <<"Preciona Enter para continuar" << endl;
-    system("read");
-
-
 }
 
 int Pila::cuantosDatos() {
@@ -122,15 +116,15 @@ Pila::~Pila() {
 int menu() {
     cout << endl << endl;
     cout << "**************************************" << endl;
-    cout << "1. Agregar un entero" << endl;
+    cout << "1. Agregar dato" << endl;
     cout << "2. Sacar dato" << endl;
     cout << "3. Mostrar la cantidad" << endl;
     cout << "4. Mostrar datos de la pila" << endl;
     cout << "**************************************" << endl;
-    int opcion;
-    cout << "Seleccione una opcion: ";
-    cin >> opcion;
-    return opcion;
+    // int opcion;
+    // cout << "Seleccione una opcion: ";
+    // cin >> opcion;
+    // return opcion;
 }
 
 main () {
@@ -139,8 +133,10 @@ main () {
     int opcion;
 
     opcion = -1;
+    menu();
     while (opcion != 0) {
-    opcion = menu();
+    cout << "Seleccione una option: ";
+    cin >> opcion;
     switch (opcion) {
         case 0:
         cout << "Gracias por usar nuestro software" << endl;

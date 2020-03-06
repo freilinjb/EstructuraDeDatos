@@ -11,6 +11,7 @@ struct Nodo {
 
 void agregarPIla(Nodo *&, int);
 void sacarPila(Nodo *&, int &);
+void mostrarPila(Nodo *&);
 
 int main(int argc, char const *argv[])
 {
@@ -18,6 +19,8 @@ int main(int argc, char const *argv[])
     int dato;
     char z;
     return 0;
+
+
 }
 
 void agregarPila(Nodo *&pila, int n){
@@ -34,4 +37,16 @@ void sacarPIla(Nodo *&pila, int &n) {
     n = aux->dato;
     pila = aux->siguiente;
     delete aux;
+}
+
+void mostrarPila(Nodo *&pila) {
+    cout << endl << "Datos en la Pila" << endl;
+    Nodo *aux = pila;
+    int i = 0;
+    while (aux != NULL)
+    {
+        i++;
+        aux = aux->siguiente;
+    }
+    cout << endl;
 }

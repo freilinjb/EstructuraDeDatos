@@ -27,7 +27,7 @@ public:
   
  void entrarDato(char dato);
  void entradaString();
-
+ void palindromo();
  char sacarDato();
  ~Pila();
 };
@@ -37,14 +37,42 @@ void Pila::mostrarDatos() {
     struct nodo *aux = inicio;
     int i = 0;
     while (aux != NULL) {
-    cout << "[" << i << "] : " << aux->campo << endl;
+    cout  << aux->campo << endl;
     i ++;
     aux = aux->siguiente;
     }
     cout << endl;
 }
 
+void Pila::palindromo(){
+    string dato;
+    string compara;
+
+    fflush(stdin);
+    cin.ignore();
+    cin.clear();
+
+
+    cout <<"Ingrese un dato: ";
+    getline(cin, dato);
+
+    for(int i = dato.length()-1; i >= 0; i--){
+        compara += dato[i];
+    }
+
+    if(compara.length() == dato.length()){
+        if(compara == dato){
+            cout << "[ Son pelendromos ]" << endl;
+        }
+        else{
+            cout << "[ No son palendromos ]" << endl;
+        }
+    }
+}
+
 void Pila::entradaString() {
+    string comparar;
+
     fflush(stdin);
     cin.ignore();
     cin.clear();
@@ -53,12 +81,17 @@ void Pila::entradaString() {
     cout << "Ingrese la cadena de texto: ";
     getline(cin, dato);
 
-    for(int i = dato.length(); i >= 0; i--){
-        entrarDato(dato[i]);
-    }
-    // for(int i = 0; i < dato.length(); i++){
+    comparar = dato;
+
+    int temp = 0;
+    // for(int i = dato.length(); i >= 0; i--){
     //     entrarDato(dato[i]);
-    // }
+         
+    //}
+
+    for(int i = 0; i < dato.length(); i++){
+        entrarDato(dato[i]);    
+    }
 
     fflush(stdin);
     cin.ignore();
@@ -120,6 +153,7 @@ int menu() {
     cout << "2. Sacar dato" << endl;
     cout << "3. Mostrar la cantidad" << endl;
     cout << "4. Mostrar datos de la pila" << endl;
+    cout << "5. Comparar polindromo" << endl;
     cout << "**************************************" << endl;
     // int opcion;
     // cout << "Seleccione una opcion: ";
@@ -152,6 +186,10 @@ main () {
         break;
         case 4:
         pila1.mostrarDatos();
+        break;
+        case 5:
+            pila1.palindromo();
+        break;
         }
     }
     return 0;

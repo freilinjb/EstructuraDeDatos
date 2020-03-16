@@ -6,6 +6,61 @@
 
 using namespace std;
 
+class Pila2
+{
+protected:
+    struct Nodo
+    {
+        string dato;
+        Nodo *siguiente;
+    };
+
+public:
+    // void procesar();
+
+    void agregarPila(Nodo *&pila, string n)
+    {
+        Nodo *nuevo_nodo = new Nodo();
+        nuevo_nodo->dato = n;
+        nuevo_nodo->siguiente = pila;
+        pila = nuevo_nodo;
+
+        cout << "Elemento agregado a la pila: " << n << endl;
+    }
+
+    void sacarPila(Nodo *&pila, string &n)
+    {
+        Nodo *aux = pila;
+        n = aux->dato;
+        pila = aux->siguiente;
+        delete aux;
+    }
+
+    void mostrarPila(Nodo pila)
+    {
+        Nodo *aux;
+        aux = pila.siguiente;
+
+        while (aux != NULL)
+        {
+            cout << "[" << aux->dato << "]" << endl;
+            aux = aux->siguiente;
+        }
+    }
+
+    void menu(void)
+    {
+        cout << "\n\t IMPLEMENTACION DE COLAS EN C++\n\n";
+        cout << " 1. ENCOLAR                               " << endl;
+        cout << " 2. DESENCOLAR                            " << endl;
+        cout << " 3. MOSTRAR COLA                          " << endl;
+        cout << " 4. VACIAR COLA                           " << endl;
+        cout << " 5. SALIR                                 " << endl;
+
+        cout << "\n INGRESE OPCION: ";
+    }
+};
+
 struct Nodo
 {
     string dato;
@@ -21,10 +76,21 @@ struct Cola
 struct Materia
 {
     string nombre;
-    Cola *estudiante;
+    Cola estudiante;
 
-    void imprimir() const {
-        cout << "Hola mundo" << endl;
+    void mostrarCola() const
+    {
+        Nodo *aux;
+        aux = estudiante.delante;
+
+        while (aux != NULL)
+        {
+            cout << "[" << aux->dato << "]" << endl;
+            aux = aux->siguiente;
+        }
+        cout << "\n\n**[precione una tecla para continuar]**" << endl;
+        getchar();
+        getchar();
     }
 
     Materia(const string nombre)
@@ -84,7 +150,7 @@ void mostrarCuentas()
         cin.clear();
         fflush(stdin);
         cout << "[" << 1 + cantidad << "] ";
-        itr->imprimir();
+        itr->mostrarCola();
         ++itr;
         cantidad++;
     }

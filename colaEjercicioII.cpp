@@ -33,6 +33,7 @@ public:
 
     void limpiarBuffer()
     {
+        fflush(stdin);
         cin.clear(); // unset failbit
         cin.ignore(numeric_limits<streamsize>::max(),'\n');
     }
@@ -47,6 +48,8 @@ public:
         p = aux->siguiente;
 
         delete (aux);
+
+        limpiarBuffer();
 
         return dato;
     }
@@ -73,11 +76,12 @@ public:
             cout << "[" << aux->dato << "]" << endl;
             aux = aux->siguiente;
         }
+        limpiarBuffer();
     }
 
     void menu()
     {
-        cout << "\n\t IMPLEMENTACION DE PILAS EN C++\n\n";
+        cout << "\n\t IMPLEMENTACION DE ESTUDIANTES EN PILAS EN C++\n\n";
         cout << " 1. APILAR                                " << endl;
         cout << " 2. DESAPILAR                             " << endl;
         cout << " 3. MOSTRAR PILA                          " << endl;
@@ -105,8 +109,8 @@ public:
             case 1:
 
                 cout << "\n Estudiante: ";
-                cin.clear(); // unset failbit
-                cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                limpiarBuffer();
+
                 getline(cin, dato);
                 
                 agregarPila(p, dato);
@@ -117,18 +121,25 @@ public:
                 
                 x = sacarPila(p);
                 cout << "\n\n\t\tEstudiante " << x << " desapilado...\n\n";
+                limpiarBuffer();
+
                 break;
 
             case 3:
+                limpiarBuffer(); 
 
                 cout << "\n\n MOSTRANDO PILA\n\n";
                 if (p != NULL)
                     mostrarPila(p);
                 else
+                {
                     cout << "\n\n\tPila vacia..!" << endl;
+                    limpiarBuffer();
+                }
                 break;
 
             case 4:
+                limpiarBuffer();
 
                 destruir_pila(p);
                 cout << "\n\n\t\tPila eliminada...\n\n";
@@ -137,8 +148,6 @@ public:
 
             cout << endl
                  << endl;
-            system("pause");
-            system("cls");
 
         } while (op != 5);
 
@@ -249,7 +258,6 @@ void mostrarCuentas()
         cantidad++;
     }
     cout << "Cantidad de registros: " << cantidad << endl;
-    system("pause");
 }
 
 string desencolar(Cola &q)

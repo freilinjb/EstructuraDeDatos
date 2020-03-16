@@ -21,6 +21,10 @@ public:
     void agregarPila(Nodo *&pila, string n)
     {
         Nodo *nuevo_nodo = new Nodo();
+
+        cout << "Digite el nombre del estudiante: ";
+        getline(cin, n);
+            
         nuevo_nodo->dato = n;
         nuevo_nodo->siguiente = pila;
         pila = nuevo_nodo;
@@ -51,11 +55,11 @@ public:
     void menu(void)
     {
         cout << "\n\t IMPLEMENTACION DE COLAS EN C++\n\n";
-        cout << " 1. ENCOLAR                               " << endl;
-        cout << " 2. DESENCOLAR                            " << endl;
-        cout << " 3. MOSTRAR COLA                          " << endl;
-        cout << " 4. VACIAR COLA                           " << endl;
-        cout << " 5. SALIR                                 " << endl;
+        cout << " 1. APILAR                               " << endl;
+        cout << " 2. DESAPILAR                            " << endl;
+        cout << " 3. MOSTRAR PILA                         " << endl;
+        cout << " 4. VACIAR VACIAR                        " << endl;
+        cout << " 5. SALIR                                " << endl;
 
         cout << "\n INGRESE OPCION: ";
     }
@@ -68,15 +72,13 @@ public:
 
         while (true)
         {
-            cout << "Digite un numero: ";
-            cin >> dato;
             agregarPila(pila, dato);
-            cout << "Desea ingresar otro elemento a la pila: (S/n): ";
+            cout << "Desea ingresar otro estudiante a la pila: (S/n): ";
             cin >> z;
 
             if (z == 'S' || z == 's')
             {
-                cout << "Digite un numero: ";
+                cout << "Digite un estudiante: ";
                 cin >> dato;
                 agregarPila(pila, dato);
             }
@@ -88,7 +90,6 @@ public:
         cout << "Sacando los elementos de la pila: ";
         while (pila != NULL)
         {
-            sacarPila(pila, dato);
             if (pila != NULL)
             {
                 cout << "[" << dato << "]" << endl;
@@ -97,6 +98,7 @@ public:
             {
                 cout << "[" << dato << "]";
             }
+
         }
         getchar();
         return 0;

@@ -59,7 +59,57 @@ public:
 
         cout << "\n INGRESE OPCION: ";
     }
+
+    int procesar()
+    {
+        Nodo *pila = NULL;
+        string dato;
+        char z;
+
+        while (true)
+        {
+            cout << "Digite un numero: ";
+            cin >> dato;
+            agregarPila(pila, dato);
+            cout << "Desea ingresar otro elemento a la pila: (S/n): ";
+            cin >> z;
+
+            if (z == 'S' || z == 's')
+            {
+                cout << "Digite un numero: ";
+                cin >> dato;
+                agregarPila(pila, dato);
+            }
+
+            else if (z == 'N' || z == 'n')
+                break;
+        }
+
+        cout << "Sacando los elementos de la pila: ";
+        while (pila != NULL)
+        {
+            sacarPila(pila, dato);
+            if (pila != NULL)
+            {
+                cout << "[" << dato << "]" << endl;
+            }
+            else
+            {
+                cout << "[" << dato << "]";
+            }
+        }
+        getchar();
+        return 0;
+    }
 };
+
+int main(int argc, char const *argv[])
+{
+    Pila2 pila;
+    pila.procesar();
+    return 0;
+}
+
 
 struct Nodo
 {

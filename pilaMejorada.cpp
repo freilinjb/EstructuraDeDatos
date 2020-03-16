@@ -60,13 +60,11 @@ void Pila::palindromo(){
         compara += dato[i];
     }
 
-    if(compara.length() == dato.length()){
-        if(compara == dato){
-            cout << "[ Son pelendromos ]" << endl;
-        }
-        else{
-            cout << "[ No son palendromos ]" << endl;
-        }
+    if(compara == dato){
+        cout << "[ Son pelendromos ]" << endl;
+    }
+    else{
+        cout << "[ No son palendromos ]" << endl;
     }
 }
 

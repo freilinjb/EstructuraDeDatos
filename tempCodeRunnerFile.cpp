@@ -13,37 +13,52 @@ protected:
     {
         string dato;
         Nodo *siguiente;
-    };
+    } typedef *pila;
 
 public:
     // void procesar();
 
-    void agregarPila(Nodo *&pila, string n)
+    void agregarPila(pila &p, string n)
     {
-        Nodo *nuevo_nodo = new Nodo();
+        pila nuevo_nodo = new (struct Nodo);
 
-        cout << "Digite el nombre del estudiante: ";
-        getline(cin, n);
-            
         nuevo_nodo->dato = n;
-        nuevo_nodo->siguiente = pila;
-        pila = nuevo_nodo;
+        nuevo_nodo->siguiente = p;
+        p = nuevo_nodo;
 
         cout << "Elemento agregado a la pila: " << n << endl;
     }
 
-    void sacarPila(Nodo *&pila, string &n)
+    string sacarPila(pila &p)
     {
-        Nodo *aux = pila;
-        n = aux->dato;
-        pila = aux->siguiente;
-        delete aux;
+        string dato;
+        pila aux;
+
+        aux = p;
+        dato = aux->dato;
+        p = aux->siguiente;
+
+        delete (aux);
+
+        return dato;
     }
 
-    void mostrarPila(Nodo pila)
+    void destruir_pila(pila &p)
     {
-        Nodo *aux;
-        aux = pila.siguiente;
+        pila aux;
+
+        while (p != NULL)
+        {
+            aux = p;
+            p = aux->siguiente;
+            delete (aux);
+        }
+    }
+
+    void mostrarPila(pila p)
+    {
+        pila aux;
+        aux = p;
 
         while (aux != NULL)
         {
@@ -52,58 +67,71 @@ public:
         }
     }
 
-    void menu(void)
+    void menu()
     {
-        cout << "\n\t IMPLEMENTACION DE COLAS EN C++\n\n";
-        cout << " 1. APILAR                               " << endl;
-        cout << " 2. DESAPILAR                            " << endl;
-        cout << " 3. MOSTRAR PILA                         " << endl;
-        cout << " 4. VACIAR VACIAR                        " << endl;
-        cout << " 5. SALIR                                " << endl;
+        cout << "\n\t IMPLEMENTACION DE PILAS EN C++\n\n";
+        cout << " 1. APILAR                                " << endl;
+        cout << " 2. DESAPILAR                             " << endl;
+        cout << " 3. MOSTRAR PILA                          " << endl;
+        cout << " 4. DESTRUIR PILA                         " << endl;
+        cout << " 5. SALIR                                 " << endl;
 
         cout << "\n INGRESE OPCION: ";
     }
 
     int procesar()
     {
-        Nodo *pila = NULL;
+        pila p = NULL; // creando pila
         string dato;
-        char z;
+        int op;
+        string x; // numero que devuelve la funcon pop
 
-        while (true)
+
+        do
         {
-            cout << "Digite el nombre del estudiante: ";
-            getline(cin, dato);
-            
-            agregarPila(pila, dato);
-            cout << "Desea ingresar otro estudiante a la pila: (S/n): ";
-            cin >> z;
+            menu();
+            cin >> op;
 
-            if (z == 'S' || z == 's')
+            switch (op)
             {
-                cout << "Digite un estudiante: ";
-                cin >> dato;
-                agregarPila(pila, dato);
-            }
+            case 1:
 
-            else if (z == 'N' || z == 'n')
+                cout << "\n Estudiante: ";
+                getline(cin, dato);
+                
+                agregarPila(p, dato);
+                cout << "\n\n\t\tNumero " << dato << " apilado...\n\n";
                 break;
-        }
 
-        cout << "Sacando los elementos de la pila: ";
-        while (pila != NULL)
-        {
-            if (pila != NULL)
-            {
-                cout << "[" << dato << "]" << endl;
-            }
-            else
-            {
-                cout << "[" << dato << "]";
+            case 2:
+
+                x = sacarPila(p);
+                cout << "\n\n\t\tNumero " << x << " desapilado...\n\n";
+                break;
+
+            case 3:
+
+                cout << "\n\n MOSTRANDO PILA\n\n";
+                if (p != NULL)
+                    mostrarPila(p);
+                else
+                    cout << "\n\n\tPila vacia..!" << endl;
+                break;
+
+            case 4:
+
+                destruir_pila(p);
+                cout << "\n\n\t\tPila eliminada...\n\n";
+                break;
             }
 
-        }
-        getchar();
+            cout << endl
+                 << endl;
+            system("pause");
+            system("cls");
+
+        } while (op != 5);
+
         return 0;
     }
 };
@@ -114,4 +142,3 @@ int main(int argc, char const *argv[])
     pila.procesar();
     return 0;
 }
-

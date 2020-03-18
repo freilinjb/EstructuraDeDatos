@@ -34,13 +34,13 @@ public:
     {
         fflush(stdin);
         cin.clear(); // unset failbit
-        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
     void limpiarBuffer()
     {
         fflush(stdin);
         cin.clear(); // unset failbit
-        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
     string sacarPila(pila &p)
@@ -103,7 +103,6 @@ public:
         int op;
         string x; // numero que devuelve la funcon pop
 
-
         do
         {
             menu();
@@ -117,13 +116,13 @@ public:
                 limpiarBuffer();
 
                 getline(cin, dato);
-                
+
                 agregarPila(p, dato);
                 cout << "\n\n\t\tEstudiante " << dato << " apilado...\n\n";
                 break;
 
             case 2:
-                
+
                 x = sacarPila(p);
                 cout << "\n\n\t\tEstudiante " << x << " desapilado...\n\n";
                 limpiarBuffer();
@@ -131,7 +130,7 @@ public:
                 break;
 
             case 3:
-                limpiarBuffer(); 
+                limpiarBuffer();
 
                 cout << "\n\n MOSTRANDO PILA\n\n";
                 if (p != NULL)
@@ -165,27 +164,28 @@ int main(int argc, char const *argv[])
     Pila2 pila;
     pila.procesar();
     return 0;
-
 }
 
-
-class Cola : protected Pila2 { 
-    public:
+class Cola : protected Pila2
+{
+public:
     Pila2 Pila;
-    struct cola {
+    struct cola
+    {
         string materia;
         Pila2::Nodo estudiante;
         Pila2::Nodo *delante;
         Pila2::Nodo *atras;
 
-
-        cola(const string materia) {
+        cola(const string materia)
+        {
             this->materia = materia;
         }
 
-        cola(){}
+        cola() {}
 
-        void encolar(cola &q,const string dato){
+        void encolar(cola &q, const string dato)
+        {
             Pila2::Nodo *aux = new Pila2::Nodo();
 
             aux->dato = dato;
@@ -197,25 +197,27 @@ class Cola : protected Pila2 {
             q.materia = aux->dato;
         }
 
-        string desencolar(cola &q) {
+        string desencolar(cola &q)
+        {
             string dato;
             Nodo *aux;
 
             aux = q.delante;
             dato = aux->dato;
             q.delante = (q.delante)->siguiente;
-            delete(aux);
+            delete (aux);
 
             return dato;
         }
 
-        void mostrarCola(cola q) {
+        void mostrarCola(cola q)
+        {
             Nodo *aux;
             aux = q.delante;
 
             while (aux != NULL)
             {
-                cout << "[" << aux->dato << "]" <<endl;
+                cout << "[" << aux->dato << "]" << endl;
                 aux = aux->siguiente;
             }
 
@@ -224,17 +226,88 @@ class Cola : protected Pila2 {
             getchar();
         }
 
-        void vaciarCola(cola &q){
+        void vaciarCola(cola &q)
+        {
             Pila2::Nodo *aux;
-            aux = q.delante;
 
-            while (aux != NULL)
+            while (q.delante != NULL)
             {
-                cout << "[" <<aux->dato << "]" <<endl;
-                aux = aux->siguiente;
+                aux = q.delante;
+                q.delante = aux->siguiente;
+                delete (aux);
             }
-            cout << "\n\n**[precione una tecla para continuar]**" <<endl;
-            getchar();
+
+            q.delante = NULL;
+            q.atras = NULL;
+        }
+
+        void menu()
+        {
+            cout << "\n\t IMPLEMENTACION DE COLAS EN C++\n\n";
+            cout << " 1. ENCOLAR                               " << endl;
+            cout << " 2. DESENCOLAR                            " << endl;
+            cout << " 3. MOSTRAR COLA                          " << endl;
+            cout << " 4. VACIAR COLA                           " << endl;
+            cout << " 5. SALIR                                 " << endl;
+
+            cout << "\n INGRESE OPCION: ";
+        }
+
+        void procesar()
+        {
+            struct cola q;
+
+            q.delante = NULL;
+            q.atras = NULL;
+
+            string dato; // numero a encolar
+            int op;   // opcion del menu
+            string x;    // numero que devuelve la funcon pop
+
+            do
+            {
+                menu();
+                cin >> op;
+
+                switch (op)
+                {
+                case 1:
+
+                    cout << "\n ASIGNATURA A ENCOLAR: ";
+                    cin >> dato;
+                    encolar(q, dato);
+                    cout << "\n\n\t\tAsignatura " << dato << " encolado...\n\n";
+                    break;
+
+                case 2:
+
+                    x = desencolar( q );
+                    cout << "\n\n\t\tNumero " << x << " desencolado...\n\n";
+                    break;
+
+                case 3:
+
+                    cout << "\n\n MOSTRANDO COLA\n\n";
+                    if (q.delante != NULL)
+                        mostrarCola(q);
+                    else
+                        cout << "\n\n\tCola vacia...!" << endl;
+                    break;
+
+                case 4:
+
+                    vaciarCola(q);
+                    cout << "\n\n\t\tHecho...\n\n";
+                    break;
+                }
+
+                cout << endl
+                     << endl;
+                system("clear");
+
+            } while (op != 5);
+
+            cout << "hola mundo" << endl;
         }
     };
 };

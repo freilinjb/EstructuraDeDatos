@@ -110,7 +110,9 @@ public:
             cantidad++;
         }
         cout << " Cantidad de estudiantes registrados: " << "[" << cantidad << "]" <<endl;
-
+        if(cantidad >= 4) {
+            cout << "No se puede adminir mas estudiantes el maximo es 4" << endl;
+        }
         limpiarBuffer();
     }
 
@@ -257,11 +259,13 @@ public:
     void mostrarCola(cola q)
     {
         Nodo *aux;
-        aux = q.delante;
+        aux = q.estudiante.siguiente;
 
         while (aux != NULL)
         {
             cout << "[" << aux->dato << "]" << endl;
+            cout << "**[Lista de estudiantes ]**" << endl;
+            mostrarPila(aux);
             aux = aux->siguiente;
         }
 
@@ -300,8 +304,8 @@ public:
 
     void menuPrincipal()
     {
-        cout << "1. Menu Mantenimiento Asignatura" << endl;
-        cout << "2. Menu Mantenimiento Estudiante" << endl;
+        cout << "1. Menu Mantenimiento Estudiante" << endl;
+        cout << "2. Menu Mantenimiento Asignatura" << endl;
         cout << "SELECCIONE UNA OPCION: ";
     }
     void procesarCola()
@@ -339,8 +343,9 @@ public:
             case 3:
 
                 cout << "\n\n MOSTRANDO COLA\n\n";
-                if (q.delante != NULL)
+                if (q.delante != NULL){
                     mostrarCola(q);
+                }
                 else
                     cout << "\n\n\tCola vacia...!" << endl;
                 break;
@@ -354,7 +359,7 @@ public:
 
             cout << endl
                  << endl;
-            system("clear");
+            // system("clear");
 
         } while (op != 5);
 

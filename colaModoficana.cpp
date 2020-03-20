@@ -76,8 +76,7 @@ void menu() {
     cout<<" 3. MOSTRAR COLA                          "<<endl;
     cout<<" 4. VACIAR COLA                           "<<endl;
     cout<<" 5. SALIR                                 "<<endl;
- 
-    cout<<"\n INGRESE OPCION: ";
+
 }
 
 int main(int argc, char const *argv[])
@@ -91,10 +90,11 @@ int main(int argc, char const *argv[])
     int dato;  // numero a encolar
     int op;    // opcion del menu
     int x ;    // numero que devuelve la funcon pop
-    
+    menu();
     do
     {
-        menu();  cin>> op;
+        cout<<"\n INGRESE OPCION: ";
+        cin>> op;
  
         switch(op)
         {
@@ -130,7 +130,7 @@ int main(int argc, char const *argv[])
          }
  
         cout<<endl<<endl;
-        system("clear");
+        // system("clear");
  
     }while(op!=5);
    

@@ -3,7 +3,10 @@
         "vector": "cpp",
         "iostream": "cpp",
         "*.tcc": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "string": "cpp",
+        "random": "cpp",
+        "limits": "cpp"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

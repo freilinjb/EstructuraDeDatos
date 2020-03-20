@@ -6,7 +6,11 @@
         "ostream": "cpp",
         "string": "cpp",
         "random": "cpp",
-        "limits": "cpp"
+        "limits": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "unordered_map": "cpp",
+        "system_error": "cpp"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

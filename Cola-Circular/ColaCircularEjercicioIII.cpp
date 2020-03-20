@@ -1,18 +1,21 @@
 /*
-II) Supóngase que se tiene la clase Cola que implementa las 
-operaciones del TAD Cola . Escribir una función para crear un
- clon (una copia ) de una cola determinada. Las operaciones que 
- se han de utilizar serán únicamente las del TAD Cola .
+
+III) Escribir un programa en el que se generen 100 números aleatorios
+ en el rango –25 .. +25 y se guarden en una cola implementada mediante un 
+ array circular. Una vez creada la cola, el usuario puede pedir que se 
+ forme otra cola con los números negativos que tiene la cola original.
+
 */
 
 #include <iostream>
 #include <stdlib.h>
+#include <iostream>
 #include <string>
-#include <limits>
+#include <random>
 
 #include <stdlib.h> 
 
-#define MAX 5
+#define MAX 100
 
 using namespace std;
 
@@ -20,7 +23,7 @@ typedef struct
 {
     int final;
     int inicio;
-    string vector[MAX];
+    float vector[MAX];
 } queue;
 
 int cantidad = 0;
@@ -65,7 +68,7 @@ bool IsFull(queue Cola)
     return false;
 }
 
-void Add(queue &Cola, const string elemento)
+void Add(queue &Cola, const float elemento)
 {
     if (!IsFull(Cola))
     { 
@@ -86,7 +89,7 @@ void Add(queue &Cola, const string elemento)
         }
 
         Cola.vector[Cola.final] = elemento;
-        cout << "Add: <" << elemento << ">" << endl;
+        // cout << "Add: <" << elemento << ">" << endl;
         // cout << "inicio: " << Cola.inicio << endl;
         // cout << "final: " << Cola.final << "\n"<< endl;
         cantidad++;
@@ -105,7 +108,7 @@ void Borrar(queue &Cola)
     {
 
         cout << "Se ha borrado " << Cola.vector[Cola.inicio] << endl; 
-        Cola.vector[Cola.inicio].clear();
+        Cola.vector[Cola.inicio] = 0.00;
 
         cantidad--;
 
@@ -135,8 +138,7 @@ void Recorrer(queue Cola)
         {
             for (x = 0; x <= Cola.final; x++)
             {
-                if (Cola.vector[x].length() != 0)
-                    cout << "Cola.vector[" << x << "]: " << Cola.vector[x] <<"\tLongitud: "<< Cola.vector[x].length() << endl;
+                cout << "Cola.vector[" << x << "]: " << Cola.vector[x]  << endl;
             }
         }
         else
@@ -179,7 +181,7 @@ void varciarColaCircular(queue &Cola) {
     for (int i = 0; i <= cantidad; i++)
     {
         Borrar(Cola);
-        Cola.vector[i].clear();
+        Cola.vector[i] = 0.00;
     }
     cout << "cantidad: " << cantidad << endl;
 }
@@ -187,13 +189,45 @@ void varciarColaCircular(queue &Cola) {
 void menuColaCircular()
 {
     cout << "\n\t IMPLEMENTACION DE COLAS CIRCULARES EN C++\n\n";
-    cout << " 1. AÑADIR ELEMENTO                           " << endl;
-    cout << " 2. MOSTRAR ELEMENTOS                         " << endl;
+    cout << " 1. GENERAR 100 NUMERO ALEATORIOS ENTRE (-25 Y 25)" << endl;
+    cout << " 2. MOSTRAR NUMEROS                         " << endl;
     cout << " 3. BORRAR ELEMENTOS                          " << endl;
     cout << " 4. CANTIDAD DE ELEMENTOS                     " << endl;
     cout << " 5. VACIAR COLA CIRCULAR                      " << endl;
     cout << " 6. MOSTRAR EL MENU NUEVAMENTE                " << endl;
     cout << " 7. SALIR                                     " << endl;
+}
+
+void IngresarNumerosAleatorios(queue Cola) {
+
+    float num;
+    random_device rd;
+    mt19937 gen(rd());
+
+    uniform_int_distribution<> dis(25,-25);
+    
+    for(int i = 1; i <= 100; i++) {
+
+        num = 25 - rand() % (-25+1);
+        num -= 25 - rand() % (-25+1);
+
+        // num = -25 + rand() % (25+1 - 25); 
+
+        if(i%10 == 0)   
+            cout << "[" << num <<"]" << endl;
+
+        else {
+            cout << "[" << num <<"]";
+        }
+
+        Add(Cola, num);
+
+
+        // if(num <= 0)
+        //     cout << "es negativo: " << num << endl; 
+    }
+        cout << "**[NUMEROS GENERADOS COMPLETO]**" << endl;
+
 }
 
 void procesarColaCircular()
@@ -211,11 +245,7 @@ void procesarColaCircular()
         switch (x)
         {
         case 1:
-            Add(Cola, ingresarDato());
-            break;
-
-        case 2:
-            Recorrer(Cola);
+            IngresarNumerosAleatorios(Cola);
             break;
 
         case 3:
@@ -247,6 +277,7 @@ void procesarColaCircular()
 int main()
 {
 
+    // procesarColaCircular();
     procesarColaCircular();
     //asi se usan las funciones, ahora experimenta
 

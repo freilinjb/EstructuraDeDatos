@@ -21,8 +21,8 @@ int main(int argc, char const *argv[])
 }
 
 
-//primero = null ultimo = 45   nuevo = 45     45,67,89,12
-//lista circular simple                  45-> primero
+//primero = 45 ultimo = 67   nuevo = 89     45,67,89,12
+//lista circular simple                  45-> 64 - > 89 -> primero
 
 void insertarNodo(){
     nodo* nuevo = new nodo();
@@ -32,5 +32,9 @@ void insertarNodo(){
     if(primero == NULL) {
         primero = nuevo;
         primero->siguiente = primero;
+    } else { 
+        ultimo->siguiente = nuevo;
+        nuevo->siguiente = primero;
+        ultimo = nuevo;
     }
 }

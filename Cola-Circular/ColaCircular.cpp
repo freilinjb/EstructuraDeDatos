@@ -215,6 +215,14 @@ string ingresarDato()
     return dato;
 }
 
+void varciarColaCircular(queue Cola) {
+    for (int i = 0; i < getElements(Cola); i++)
+    {
+        Borrar(Cola);
+    }
+    
+}
+
 void menuColaCircular()
 {
     cout << "\n\t IMPLEMENTACION DE COLAS CIRCULARES EN C++\n\n";

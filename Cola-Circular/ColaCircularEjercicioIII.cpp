@@ -30,7 +30,7 @@ int cantidad = 0;
 int cantidadNegativa = 0;
 
 
-void Crear(circuloNegativo &Cola) {
+void CrearNegativo(circuloNegativo &Cola) {
     Cola.final = -1;
     Cola.inicio = -1;
 }
@@ -41,8 +41,7 @@ void Crear(queue &Cola)
     Cola.inicio = -1;
 }
 
-bool IsEmpty(queue Cola)
-{
+bool IsEmpty(queue Cola) {
     if (Cola.final == -1)
     {
         return true;
@@ -51,8 +50,7 @@ bool IsEmpty(queue Cola)
 }
 
 
-bool IsEmpty(circuloNegativo Cola)
-{
+bool IsEmptyNegativo(circuloNegativo Cola) {
     if (Cola.final == -1)
     {
         return true;
@@ -60,8 +58,7 @@ bool IsEmpty(circuloNegativo Cola)
     return false;
 }
 
-int getElements(queue Cola)
-{
+int getElements(queue Cola) {
     if (IsEmpty(Cola))
     {
         return 0;
@@ -74,9 +71,8 @@ int getElements(queue Cola)
     return MAX - Cola.inicio + Cola.final + 1;
 }
 
-int getElements(circuloNegativo Cola)
-{
-    if (IsEmpty(Cola))
+int getElementsNegativo(circuloNegativo Cola) {
+    if (IsEmptyNegativo(Cola))
     {
         return 0;
     }
@@ -89,8 +85,7 @@ int getElements(circuloNegativo Cola)
 }
 
 
-bool IsFull(queue Cola)
-{
+bool IsFull(queue Cola) {
     if (getElements(Cola) == MAX)
     {
         return true;
@@ -98,8 +93,7 @@ bool IsFull(queue Cola)
     return false;
 }
 
-void Add(queue &Cola, const float elemento)
-{
+void Add(queue &Cola, float elemento) {
     if (!IsFull(Cola))
     { 
 
@@ -129,22 +123,20 @@ void Add(queue &Cola, const float elemento)
         cout << "Esta llena, no pudo entrar <" << elemento << ">" << endl;
     }
 }
-
-bool IsFull(circuloNegativo Cola)
+bool IsFullNegativo(circuloNegativo Cola)
 {
-    if (getElements(Cola) == MAX)
+    if (getElementsNegativo(Cola) == MAX)
     {
         return true;
     }
     return false;
 }
 
-void AddNegativo(circuloNegativo &Cola, const float elemento)
-{
-    if (!IsFull(Cola))
+void AddNegativo(circuloNegativo &Cola, const float elemento) {
+    if (!IsFullNegativo(Cola))
     { 
 
-        if (IsEmpty(Cola))
+        if (IsEmptyNegativo(Cola))
         { 
             Cola.inicio++;
         }
@@ -173,8 +165,7 @@ void AddNegativo(circuloNegativo &Cola, const float elemento)
 
 /*
 */
-void Borrar(queue &Cola)
-{
+void Borrar(queue &Cola) {
     if (!IsEmpty(Cola))
     {
 
@@ -199,10 +190,63 @@ void Borrar(queue &Cola)
     }
 }
 
-
-void Recorrer(queue Cola)
-{
+void Recorrer(queue Cola) {
     if (!IsEmpty(Cola))
+    {
+        int x;
+        if (Cola.inicio <= Cola.final)
+        {
+            for (x = 0; x <= Cola.final; x++)
+            {
+                cout << "Cola.vector[" << x << "]: " << Cola.vector[x] << endl;
+            }
+        }
+        else
+        {
+            for (x = Cola.inicio; x < MAX; x++)
+            {
+                cout << "Cola.vector[" << x << "]: " << Cola.vector[x] << endl;
+            }
+            for (x = 0; x <= Cola.final; x--)
+            {
+                cout << "Cola.vector[" << x << "]: " << Cola.vector[x] << endl;
+            }
+        }
+    }
+    else
+    {
+        cout << "nada que ver" << endl;
+    }
+}
+
+void BorrarNegativo(circuloNegativo &Cola) {
+    if (!IsEmptyNegativo(Cola))
+    {
+
+        cout << "Se ha borrado " << Cola.vector[Cola.inicio] << endl; 
+        Cola.vector[Cola.inicio] = 0.00;
+
+        cantidad--;
+
+        if (getElementsNegativo(Cola) == 1)
+        {
+            CrearNegativo(Cola); 
+        }
+        else
+        {
+            Cola.inicio++; 
+                           
+        }
+    }
+    else
+    {
+        cout << "Vacia no se puede borrar nada" << endl;
+    }
+}
+
+
+void RecorrerNegativo(circuloNegativo Cola) {
+    if (!IsEmptyNegativo(Cola))
     {
         int x;
         if (Cola.inicio <= Cola.final)
@@ -230,65 +274,8 @@ void Recorrer(queue Cola)
     }
 }
 
-void BorrarNegativo(circuloNegativo &Cola)
-{
-    if (!IsEmpty(Cola))
-    {
 
-        cout << "Se ha borrado " << Cola.vector[Cola.inicio] << endl; 
-        Cola.vector[Cola.inicio] = 0.00;
-
-        cantidad--;
-
-        if (getElements(Cola) == 1)
-        {
-            Crear(Cola); 
-        }
-        else
-        {
-            Cola.inicio++; 
-                           
-        }
-    }
-    else
-    {
-        cout << "Vacia no se puede borrar nada" << endl;
-    }
-}
-
-
-void RecorrerNegativo(circuloNegativo Cola)
-{
-    if (!IsEmpty(Cola))
-    {
-        int x;
-        if (Cola.inicio <= Cola.final)
-        {
-            for (x = 0; x <= Cola.final; x++)
-            {
-                cout << "Cola.vector[" << x << "]: " << Cola.vector[x]  << endl;
-            }
-        }
-        else
-        {
-            for (x = Cola.inicio; x < MAX; x++)
-            {
-                cout << "Cola.vector[" << x << "]: " << Cola.vector[x] << endl;
-            }
-            for (x = 0; x <= Cola.final; x--)
-            {
-                cout << "Cola.vector[" << x << "]: " << Cola.vector[x] << endl;
-            }
-        }
-    }
-    else
-    {
-        cout << "nada que ver" << endl;
-    }
-}
-
-
-void PasarDatos(queue Cola,circuloNegativo ColaNegativa) {
+void PasarDatos(queue &Cola,circuloNegativo &ColaNegativa) {
     if(!IsEmpty(Cola)) {
         int x;
         if (Cola.inicio <= Cola.final)
@@ -319,8 +306,7 @@ void PasarDatos(queue Cola,circuloNegativo ColaNegativa) {
     }
 }
 
-void limpiarBuffer()
-{
+void limpiarBuffer() {
     fflush(stdin);
     cin.clear(); // unset failbit
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -336,8 +322,7 @@ void varciarColaCircular(queue &Cola) {
     cout << "cantidad: " << cantidad << endl;
 }
 
-void menuColaCircular()
-{
+void menuColaCircular() {
     cout << "\n\t IMPLEMENTACION DE COLAS CIRCULARES EN C++\n\n";
     cout << " 1. GENERAR 100 NUMERO ALEATORIOS ENTRE (-25 Y 25)" << endl;
     cout << " 2. MOSTRAR NUMEROS                         " << endl;
@@ -348,13 +333,9 @@ void menuColaCircular()
     cout << " 7. SALIR                                     " << endl;
 }
 
-void IngresarNumerosAleatorios(queue Cola) {
+void IngresarNumerosAleatorios(queue &Cola) {
 
     float num;
-    random_device rd;
-    mt19937 gen(rd());
-
-    uniform_int_distribution<> dis(25,-25);
     
     for(int i = 1; i <= 100; i++) {
 
@@ -380,8 +361,7 @@ void IngresarNumerosAleatorios(queue Cola) {
 
 }
 
-void procesarColaCircular()
-{
+void procesarColaCircular() {
     int x;
     queue Cola;
     circuloNegativo ColaNegotiva;
@@ -399,6 +379,10 @@ void procesarColaCircular()
             IngresarNumerosAleatorios(Cola);
             break;
 
+        case 2:
+            Recorrer(Cola);
+            break;
+
         case 3:
             PasarDatos(Cola,ColaNegotiva);
             break;
@@ -408,8 +392,6 @@ void procesarColaCircular()
             break;
 
         case 5:
-            varciarColaCircular(Cola);
-            varciarColaCircular(Cola);
             varciarColaCircular(Cola);
             cout << "Funcion borrar" << endl;
             break;
@@ -422,7 +404,7 @@ void procesarColaCircular()
             cout << "Esta opcion no exite " << endl;
             break;
         }
-    } while (x != 6);
+    } while (x != 7);
 }
 
 int main()

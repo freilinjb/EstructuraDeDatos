@@ -68,7 +68,6 @@ void RecorrerCopias() {
             cantidad++;
         }
         cout << "\nCantidad de registros: " << cantidad << endl;
-        system("pause");  
 }
 
     int getElements(queue Cola)
@@ -262,12 +261,13 @@ void RecorrerCopias() {
                 break;
 
             case 6:
-                system("clear");
-                menuColaCircular();
-                break;
-            case 7:
                 cout << "Cola copiada con " << cantidad << " elementos " << endl;
                 crearCopia(Cola);
+                break;
+
+            case 7:
+                system("clear");
+                menuColaCircular();
                 break;
             default:
                 cout << "Esta opcion no exite " << endl;

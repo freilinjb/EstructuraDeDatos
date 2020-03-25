@@ -127,9 +127,9 @@ void insertar( struct cola &q, string c, int pr )
 ------------------------------------------------------------------------*/
 void menu()
 {
-    cout<<"\n\t COLAS CON PRIORIDAD EN C++ \n\n";
+    cout<<"\n\t COLAS CON PRIORIDAD \n\n";
     cout<<" 1. ENCOLAR                           "<<endl;
-    cout<<" 2. MOSTRAR                           "<<endl;
+    cout<<" 2. MOSTRAR COLA                           "<<endl;
     cout<<" 3. SALIR                             "<<endl;
 
     cout<<"\n INGRESE OPCION: ";

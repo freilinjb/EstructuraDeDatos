@@ -8,25 +8,20 @@
 
 using namespace std;
 
-/*                Estructura de los nodos de la cola       
-------------------------------------------------------------------------*/
+
 struct nodo
 {
     string dato;
-    int priori;        // prioridad del nodo
+    int priori;        
     struct nodo *sgte;
 };
 
-/*                      Estructura de la cola      
-------------------------------------------------------------------------*/
 struct cola
 {
     nodo *delante;
     nodo *atras  ;
 };
 
-/*                         Crear Nodo     
-------------------------------------------------------------------------*/
 struct nodo *crearNodo( string dato, int prioridad)
 {
     struct nodo *nuevoNodo = new(struct nodo);
@@ -35,7 +30,7 @@ struct nodo *crearNodo( string dato, int prioridad)
     return nuevoNodo;
 };
 
-/*                        Encolar cacarter con prioridad      
+/*                        Encolar datos con prioridad      
 ------------------------------------------------------------------------*/
 
 void limpiarBuffer() {
@@ -51,7 +46,7 @@ void encolar( struct cola &q, string dato, int prioridad )
      aux->sgte = NULL;
      
      if( q.delante == NULL)
-         q.delante = aux;   // encola el primero elemento
+         q.delante = aux;   
 
      else
          (q.atras)->sgte = aux;
@@ -59,8 +54,6 @@ void encolar( struct cola &q, string dato, int prioridad )
      q.atras = aux;        // puntero que siempre apunta al ultimo elemento 
 }
 
-/*                        Mostrar Cola       
-------------------------------------------------------------------------*/
 void muestraCola( struct cola q )
 {
      struct nodo *aux;
@@ -78,7 +71,7 @@ void muestraCola( struct cola q )
      }    
 }
 
-/*         Ordenar  por prioridad( criterio de O. por Burbuja)    
+/*         ( criterio de O. por Burbuja)    
 ------------------------------------------------------------------------*/
 void ordenarPrioridad( struct cola &q )
 {
@@ -112,8 +105,7 @@ void ordenarPrioridad( struct cola &q )
             aux1 = aux1->sgte;
      }
 }
-/*                Inserta cacacteres en una cola     
-------------------------------------------------------------------------*/
+
 void insertar( struct cola &q, string c, int pr )
 {
      /* Encolando caracteres */
@@ -123,8 +115,7 @@ void insertar( struct cola &q, string c, int pr )
      ordenarPrioridad( q ); 
 }
 
-/*                        Menu de opciones     
-------------------------------------------------------------------------*/
+
 void menu()
 {
     cout<<"\n\t COLAS CON PRIORIDAD \n\n";
@@ -135,8 +126,6 @@ void menu()
     cout<<"\n INGRESE OPCION: ";
 }
 
-/*                        Funcion Principal        
-------------------------------------------------------------------------*/
 int main()
 {
     struct cola q;
@@ -144,10 +133,9 @@ int main()
     q.delante = NULL;
     q.atras   = NULL;
 
-    string dato ;     // caracter a encolar
+    string dato ;     
     int prioridad;      // prioridad del caracter
-    int option;      // opcion del menu
-    int x ;      // numero que devuelve la funcon pop
+    int option;      
     
     do
     {

@@ -1,14 +1,10 @@
-/*
-* C++ - Colas con prioridad
-* Copyright 2014 Martin Cruz Otiniano
-* Description: Se encola caracteres de acuerdo a su prioridad(entero) ingresada.
-* Site: martincruz.me
-*/
+
 
 #include <iostream>
 #include <stdlib.h>
 #include <string>
 #include <limits>
+#include <iomanip>
 
 using namespace std;
 
@@ -56,6 +52,7 @@ void encolar( struct cola &q, string dato, int prioridad )
      
      if( q.delante == NULL)
          q.delante = aux;   // encola el primero elemento
+
      else
          (q.atras)->sgte = aux;
 
@@ -67,6 +64,7 @@ void encolar( struct cola &q, string dato, int prioridad )
 void muestraCola( struct cola q )
 {
      struct nodo *aux;
+     int width = 10;
      
      aux = q.delante;
      
@@ -75,7 +73,7 @@ void muestraCola( struct cola q )
           
      while( aux != NULL )
      {
-            cout<<"    "<< aux->dato << "     |     " << aux->priori << endl;
+            cout<<"    "<< aux->dato  << setw(width) << "     |     " << aux->priori << endl;
             aux = aux->sgte;
      }    
 }
@@ -160,6 +158,7 @@ int main()
             case 1:
 
                  cout<< "\n Ingrese dato: ";
+                 limpiarBuffer();
                  getline(cin, dato);
                  
                  cout<< "\n Ingrese prioridad: ";   

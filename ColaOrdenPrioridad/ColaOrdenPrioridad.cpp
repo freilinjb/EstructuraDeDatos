@@ -71,6 +71,18 @@ void muestraCola( struct cola q )
      }    
 }
 
+string desencolar(cola &q) {
+    string dato;
+    struct nodo *aux;
+
+    aux = q.delante;
+    dato = aux->dato;
+    q.delante = (q.delante)->sgte;
+    delete(aux);
+
+    return dato;
+}
+
 /*         ( criterio de O. por Burbuja)    
 ------------------------------------------------------------------------*/
 void ordenarPrioridad( struct cola &q )

@@ -50,6 +50,7 @@ public:
     }
 
     void crearCopia(const queue &Cola) {
+        if(Cola.vector)
         listaCola.push_back(Cola);
     }
 

@@ -28,6 +28,7 @@ public:
         final = NULL;
     }; // constructor
     int pilaMAX = 3;
+    bool pilaLena();
     void limpiarBuffer();
     int pilaLlena();
     void mostrarDatos();
@@ -62,6 +63,16 @@ void Pila::mostrarDatos()
         aux = aux->siguiente;
     }
     cout << endl;
+}
+
+
+bool Pila::pilaLena()
+{
+    if (indicePila == pilaMAX)
+    {
+        return true;
+    }
+    return false;
 }
 
 void Pila::palindromo()

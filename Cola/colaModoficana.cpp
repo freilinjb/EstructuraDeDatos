@@ -102,7 +102,7 @@ int main(int argc, char const *argv[])
  
                  cout<< "\n NUMERO A ENCOLAR: "; cin>> dato;
                  encolar( q, dato );
-                 cout<<"\n\n\t\tNumero " << dato << " encolado...\n\n";
+                 cout<<"t\tNumero " << dato << " encolado...\n\n";
             break;
  
  
@@ -115,16 +115,16 @@ int main(int argc, char const *argv[])
  
             case 3:
  
-                 cout << "\n\n MOSTRANDO COLA\n\n";
+                 cout << " MOSTRANDO COLA\n\n";
                  if(q.delante!=NULL) mostrarCola( q );
-                 else   cout<<"\n\n\tCola vacia...!"<<endl;
+                 else   cout<<"\tCola vacia...!"<<endl;
             break;
  
  
             case 4:
  
                  vaciaCola( q );
-                 cout<<"\n\n\t\tHecho...\n\n";
+                 cout<<"\t\tHecho...\n\n";
             break;
            
          }

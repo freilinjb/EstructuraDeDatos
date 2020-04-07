@@ -8,28 +8,13 @@ using namespace std;
 
 struct nodo{
 
-
     int numero; 
     struct nodo *sgte; // puntero al siguiente nodo
-    nodo(int numero, nodo *siguiente) {
-        this->numero = numero;
-        this->sgte = siguiente;
-    } 
-    nodo() {
-
-    }
 };
 
+int cantidad = 0, primero, segundo;
 
 typedef struct nodo *Lista;//definimos puntero de tipo nodo
-
-Lista inicio = NULL;
-Lista inicio = NULL;
-
-
-
-int cantidad = 0;
-
 
 /*----------------------------- MENU ------------------------------*/
 void menu(void){
@@ -44,30 +29,10 @@ void menu(void){
 }
 
 
-
-/*----------------------- FUNCION REGISTRAR NUMERO ----------------------*/
-
-void agrergarNodo(Lista &lista) {
-    Lista aux;
-
-    if(lista != NULL && lista->sgte != NULL) {
-
-        lista->sgte = aux;
-    }
-
-    else {
-        cout<<"\n\n\tLISTA VACIA.....!!!!";
-    }
-}
-
-void registrar(Lista &lista){
+void registrar(Lista &lista, int dato){
 
     Lista t,q = new(struct nodo);
-
-    cout<<"\n\n\t\t[  REGISTRO  ]\n";
-    cout<<"\t\t------------";
-    cout<<"\n\tNumero:"; cin>>q->numero;
-    cout<<endl;
+    q->numero = dato;
 
     q->sgte = NULL;
 
@@ -84,8 +49,31 @@ void registrar(Lista &lista){
         }
 
         t->sgte = q;
-
     }
+}
+
+void procesar(Lista &lista) {
+    int dato;
+    cout<<"\n\n\t\t[  REGISTRO  ]\n";
+    cout<<"\t\t------------";
+
+    cout<<"\n\tNumero:"; cin>>dato;
+    if(cantidad == 0)
+        primero = dato;
+    else if(cantidad == 1) 
+        segundo = dato;
+
+    cantidad ++;
+    registrar(lista, dato);
+
+    if(cantidad == 2){
+        registrar(lista,abs(primero - segundo));
+        cantidad = 0;
+    }
+
+
+    cout << "cantidad: "<< cantidad << "\t primero: "<< primero << "\tSegundo: " << segundo<< endl;
+
 }
 
 void listar(Lista q){
@@ -95,14 +83,6 @@ void listar(Lista q){
     cout<<"\n\n\t[  LISTA DE NUMEROS  ]";
     cout<<"\n\n\t-------------------------"<<endl;
     while(q!=NULL){
-
-        cantidad++;
-
-        if(cantidad%2 == 0) {
-            aux->numero = abs(q->numero - q->sgte->numero);
-            cout <<"prueba: "<< aux->numero << endl;
-        }
-
         // aux->numero = abs(q->numero - q->sgte->numero);
         // aux->sgte = q->sgte; 
         // q->sgte = aux;
@@ -111,11 +91,7 @@ void listar(Lista q){
         q=q->sgte;
 
         i++;
-        cout << "prueba temporal: " << cantidad<<endl;
     }
-
-    cantidad = 0;
-
 }
 
 
@@ -166,18 +142,23 @@ void eliminar(Lista &lista){
 
 int main(void){
 
+    int cantidad = 0;
+    int primero;
+    int segundo;
     Lista lista=NULL;
 
     int op;
     menu();
 
     do{
-            cout<<"\n Ingrese opcion : ";
+        cout<<"\n Ingrese opcion : ";
+
             cin>>op;
 
             switch(op){
 
-                case 1: registrar(lista);
+                case 1:   
+                        procesar(lista);
                         break;
 
                 case 2: listar(lista);

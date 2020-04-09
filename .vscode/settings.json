@@ -12,7 +12,8 @@
         "unordered_map": "cpp",
         "system_error": "cpp",
         "sstream": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "cstdlib": "cpp"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

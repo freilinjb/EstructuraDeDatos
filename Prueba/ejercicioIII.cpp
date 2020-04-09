@@ -1,8 +1,8 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string>
+#include <cstdlib>
 #include <limits>
-
 #include <list>
 
 using namespace std;
@@ -15,17 +15,17 @@ template<class T> struct Nodo{
 	Nodo(T e = 0, Nodo* s = nullptr, Nodo* a = nullptr) : elemento(e), sgte(s), anterior(a){}
 };
 
-template<class T> class Lista{
+template<class T> class ListaDME{
 private:
 	Nodo<T>* inicio;
 	int n_elementos;
 
 public:
-	Lista(){
+	ListaDME(){
 		inicio = nullptr;
 		n_elementos = 0;
 	}
-	~Lista(){
+	~ListaDME(){
 		Limpiar();
 	}
 
@@ -118,198 +118,260 @@ public:
 		}
 		cout << "]" << endl;
 	}
+
+    void menuLDME(void){
+
+        cout<<"\n\t\t[     LISTA DOBLEMENTE ENLAZADA NUMEROS     ]\n";
+        cout<<"\t\t----------------------------------\n\n";
+        cout<<" 1. REGISTRAR AL INICIO                         "<<endl;
+        cout<<" X. REGISTRAR AL FINAL        (ELIMINADA)                 "<<endl;
+        cout<<" 2. LISTAR NUMERO                            "<<endl;
+        cout<<" 3. ELIMINAR NUMERO                          "<<endl;
+        cout<<" 4. SALIR                                    "<<endl;
+
+    }
 };
 
-int main(){
-	Lista<int> listas;
+ListaDME<int> lista_DME;
 
-	for (int i = 0; i < 10; i++){
-		listas.Insertar_Ordenado(i + 1);
-	}
 
-	listas.Mostrar();
-	cout << endl;
+void procesarLDMEL(){
 
-	cout << endl;
-	// listas.Eliminar_elementos(3, 7);
+    int opt;
+    int dato;
 
-	// cout << endl;
-	listas.Mostrar();
+    lista_DME.menuLDME();
 
-	return 0;
+
+    do {
+        cout << "selecciona una option: ";
+        cin >> opt;
+
+        switch (opt)
+        {
+        case 1: cout << "Ingrese un dato: ";
+                cin >> dato;
+                lista_DME.Insertar_Ordenado(dato);
+            break;
+        
+        case 2: lista_DME.Mostrar();
+            break;
+        
+        case 3: lista_DME.Eliminar_elementos(1,5);
+            break;
+        
+        default: cout << "ESTA OPCION NO EXISTE" << endl;
+            break;
+        }
+    }while(opt != 4);
 }
 
-// #include<iostream>
-// #include<cstdlib>
-// #include <cmath>
-
-// #define maxchar 50
-
-// using namespace std;
-
-// struct nodo{
+struct nodo{
 
 
-//     int numero; 
-//     struct nodo *sgte;
-// };
+    int numero; 
+    struct nodo *sgte;
+};
 
 
-// typedef struct nodo *Lista;
+typedef struct nodo *Lista;
 
-// void menu(void){
+void menuLista(void){
 
-//     cout<<"\n\t\t[     LISTA EN LAZADADE NUMEROS     ]\n";
-//     cout<<"\t\t----------------------------------\n\n";
-//     cout<<" 1. REGISTRAR NUMERO                         "<<endl;
-//     cout<<" 2. LISTAR NUMERO                            "<<endl;
-//     cout<<" 3. ELIMINAR NUMERO                          "<<endl;
-//     cout<<" 3. SALIR                                    "<<endl;
+    cout<<"\n\t\t[     LISTA EN LAZADADE NUMEROS     ]\n";
+    cout<<"\t\t----------------------------------\n\n";
+    cout<<" 1. REGISTRAR NUMERO                         "<<endl;
+    cout<<" 2. LISTAR NUMERO                            "<<endl;
+    cout<<" 3. ELIMINAR NUMERO                          "<<endl;
+    cout<<" 4. COPIAR LISTA A LISTA DOBLEMENTE ENLAZADA "<<endl;
+    cout<<" 5. SALIR                                    "<<endl;
 
-// }
-
-
-// void agrergarNodo(Lista &lista) {
-//     Lista aux;
-
-//     if(lista != NULL && lista->sgte != NULL) {
-
-//         lista->sgte = aux;
-//     }
-
-//     else {
-//         cout<<"\n\n\tLISTA VACIA.....!!!!";
-//     }
-// }
-
-// void registrar(Lista &lista){
-
-//     Lista t,q = new(struct nodo);
-
-//     cout<<"\n\n\t\t[  REGISTRO  ]\n";
-//     cout<<"\t\t------------";
-//     cout<<"\n\tNumero:"; cin>>q->numero;
-//     cout<<endl;
-
-//     q->sgte = NULL;
-
-//     if(lista==NULL){
-
-//         lista = q;
-
-//     } else {
-
-//         t = lista;
-
-//         while(t->sgte!=NULL){
-//             t = t->sgte;
-//         }
-
-//         t->sgte = q;
-
-//     }
-// }
-
-// void listar(Lista q){
-//     Lista aux;
-
-//     int i=1;
-//     cout<<"\n\n\t[  LISTA DE NUMEROS  ]";
-//     cout<<"\n\n\t-------------------------"<<endl;
-//     while(q!=NULL){
+}
 
 
-//         // aux->numero = abs(q->numero - q->sgte->numero);
-//         // aux->sgte = q->sgte; 
-//         // q->sgte = aux;
-//         cout<<"\tNumero  : "<<q->numero<<endl;
+void agrergarNodo(Lista &lista) {
+    Lista aux;
+
+    if(lista != NULL && lista->sgte != NULL) {
+
+        lista->sgte = aux;
+    }
+
+    else {
+        cout<<"\tLISTA VACIA.....!!!!";
+    }
+}
+
+void registrar(Lista &lista){
+
+    Lista t,q = new(struct nodo);
+
+    cout<<"\t\t[  REGISTRO  ]\n";
+    cout<<"\t\t------------";
+    cout<<"\tNumero:"; cin>>q->numero;
+    cout<<endl;
+
+    q->sgte = NULL;
+
+    if(lista==NULL){
+
+        lista = q;
+
+    } else {
+
+        t = lista;
+
+        while(t->sgte!=NULL){
+            t = t->sgte;
+        }
+
+        t->sgte = q;
+
+    }
+}
+
+void listar(Lista q){
+    Lista aux;
+
+    int i=1;
+    cout<<"\t[  LISTA DE NUMEROS  ]";
+    cout<<"\t-------------------------"<<endl;
+    while(q!=NULL){
+
+
+        // aux->numero = abs(q->numero - q->sgte->numero);
+        // aux->sgte = q->sgte; 
+        // q->sgte = aux;
+        cout<<"\tNumero  : "<<q->numero<<endl;
         
-//         q=q->sgte;
+        q=q->sgte;
 
-//         i++;
-//     }
+        i++;
+    }
+}
 
+void CopiarLista(Lista q, ListaDME<int>& listaD){
+    Lista aux;
 
-// }
-
-
-// void eliminar(Lista &lista){
-
-//     int cod;
-//     Lista q,t;
-//     q=lista;
-
-//     if(lista==NULL){
-
-//         cout<<"\tLISTA VACIA.....!!!!";
-
-//     }else{
-
-//         cout<<"\tELIMINAR DE NUMEROS";
-//         cout<<"\tINGRESE UN NUMERO:"; cin>>cod;
-
-//         while(q!=NULL){
-
-//             if(q->numero==cod){
-
-//                 if(q==lista)
-//                     lista=lista->sgte;
-
-//                 else
-//                     t->sgte=q->sgte;
-
-//                 delete(q);
-
-//                 cout<<"\tNUMERO  ELIMINADO...!!!!!\n";
-
-//                 return;
-
-//             }else {
-
-//                 t=q;
-//                 q=q->sgte;
-
-//         }
-
-//     }
-//     if(q==NULL)
-//         cout<<"\tCODIGO INCORRECTO...!!\n";
-
-//     }
-// }
-
-// int main(void){
-
-//     Lista lista=NULL;
-
-//     int op;
-//     menu();
-
-//     do{
-//             cout<<"\n Ingrese opcion : ";
-//             cin>>op;
-
-//             switch(op){
-
-//                 case 1: registrar(lista);
-//                         break;
-
-//                 case 2: listar(lista);
-//                         break;
-
-//                 case 3: eliminar(lista);
-//                         break;
-
-//                 case 4: return 0;
+    int i=1;
+    cout<<"\t[  LISTA DE NUMEROS  ]";
+    cout<<"\t-------------------------"<<endl;
+    while(q!=NULL){
 
 
-//                 default: cout<<"INGRESE UNA OPCION VALIDA...\n"; break;
+        // aux->numero = abs(q->numero - q->sgte->numero);
+        // aux->sgte = q->sgte; 
+        // q->sgte = aux;
+        cout<<"\tCopiado  : "<<q->numero<<endl;
+        listaD.Insertar_Ordenado(q->numero);
+        
+        q=q->sgte;
 
-//             }
-//             cout<<endl;
+        i++;
+    }
+    cout << "Nodos Copiados con EXITO";
+}
 
-//         }while(op!=6);
+
+void eliminar(Lista &lista){
+
+    int cod;
+    Lista q,t;
+    q=lista;
+
+    if(lista==NULL){
+
+        cout<<"\tLISTA VACIA.....!!!!";
+
+    }else{
+
+        cout<<"\tELIMINAR DE NUMEROS";
+        cout<<"\tINGRESE UN NUMERO:"; cin>>cod;
+
+        while(q!=NULL){
+
+            if(q->numero==cod){
+
+                if(q==lista)
+                    lista=lista->sgte;
+
+                else
+                    t->sgte=q->sgte;
+
+                delete(q);
+
+                cout<<"\tNUMERO  ELIMINADO...!!!!!\n";
+
+                return;
+
+            }else {
+
+                t=q;
+                q=q->sgte;
+
+        }
+
+    }
+    if(q==NULL)
+        cout<<"\tCODIGO INCORRECTO...!!\n";
+
+    }
+}
+
+void procesarLista(void){
+
+    Lista lista=NULL;
+    int op;
+    menuLista();
+
+    do{
+            cout<<"\n Ingrese opcion : ";
+            cin>>op;
+
+            switch(op){
+
+                case 1: registrar(lista);
+                        break;
+
+                case 2: listar(lista);
+                        break;
+
+                case 3: eliminar(lista);
+                        break;
+
+                case 4:  CopiarLista(lista,lista_DME);
+                    break;
 
 
-//     return 0;
-// }
+                default: cout<<"INGRESE UNA OPCION VALIDA...\n"; break;
+
+            }
+            cout<<endl;
+
+        }while(op!=5);
+}
+
+int main() {
+    system("clear");
+    string stringMenu = "\n1) MENU LISTA ENLAZADA\n2) MENU LISTA LISTA DOBLEMENTE ENLAZADA\n3) SALIR\n";
+    int opt;
+
+    do {
+
+        cout << stringMenu<<endl;
+        cout <<"Ingrese una opcion: ";
+        cin>>opt;
+
+        switch (opt)
+        {
+        case 1: procesarLista();
+            break;
+
+        case 2: procesarLDMEL();
+            break;
+        
+        default:
+            break;
+        }
+    }while(opt != 3);
+}

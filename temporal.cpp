@@ -1,139 +1,181 @@
+#include<string>
+#include<stdlib.h>
 
-#include <iostream>
+
 using namespace std;
- 
-struct nodo{
-    int nro;
-    struct nodo *sgte;
+
+struct Nodo{
+			string dato;
+			int prioridad;
+
+			struct Nodo *sgte;
 };
- 
-typedef nodo *ptrPila;   // creando nodo tipo puntero( tipo de dato )
- 
-/*                        Apilar elemento      
-------------------------------------------------------------------------*/
-void push( ptrPila &p, int valor )
-{
-     ptrPila aux;
-     aux = new(struct nodo);  // apuntamos al nuevo nodo creado
-     aux->nro = valor;
-     
-     aux->sgte = p ;
-     p = aux ;
+
+//ESTRUCTURA COLA
+
+struct cola{
+            Nodo *frente;
+            Nodo *atras;
+}q;
+//CREAR NODO
+
+     struct Nodo *crearNodo(string x, int pr){
+        struct Nodo *n_nodo = new(struct Nodo);
+
+        n_nodo -> dato = x;
+        n_nodo -> prioridad = pr;
+
+        return n_nodo;
+
+     };
+
+//ENCOLAR
+void encolar( struct cola &q, string valor, int prioridad){
+
+    struct Nodo *aux = crearNodo(valor, prioridad);
+    aux -> sgte = NULL;
+
+    if(q.frente = NULL){
+    
+        q.frente = aux;
+    }else{
+        (q.atras)->sgte=aux;
+        q.atras = aux;
+		
+    }
 }
- 
-/*                Desapilar elemento(devuelve elemento)      
-------------------------------------------------------------------------*/
-int pop( ptrPila &p )
-{
-     int num ;
-     ptrPila aux;
-     
-     aux = p ;
-     num = aux->nro;   // asignamos el primer vamor de la pila
-     
-     p = aux->sgte ;
-     delete(aux);
-     
-     return num;
+
+
+//MOSTRAR COLA
+
+void muestracola (struct cola q){
+
+    struct Nodo *aux;
+    
+    aux=q.frente;
+
+
+    cout<<"Nombre   Prioridad"<<endl;
+    cout<<"------------------"<<endl;
+
+    while(aux != NULL){
+
+        cout<<" "<<aux->dato<<"     |  "<<aux->prioridad<<endl;
+
+        aux = aux ->sgte;
+    }
+
 }
- 
-/*                     Muestra elementos de la pila      
-------------------------------------------------------------------------*/
-void mostrar_pila( ptrPila p )
-{
-     ptrPila aux;
-     aux = p;     // apunta al inicio de la lista
-     
-     while( aux !=NULL )
-     {
-            cout<<"\t"<< aux->nro <<endl;
-            aux = aux->sgte;
-     }    
+
+///ORDENAR PRIORIDAD
+
+void ordenarPrioridad(struct cola &q){
+    struct Nodo *aux1, *aux2;
+
+    int pAux;
+    string cAux;
+
+    aux1=q.frente;
+
+        while(aux1->sgte !=NULL){
+
+            aux2= aux1->sgte;
+
+            while(aux2 != NULL){
+                if(aux1->prioridad > aux2->prioridad){
+                    pAux= aux1->prioridad;
+                    cAux= aux1->dato;
+
+                    aux1-> prioridad = aux2 -> prioridad;
+                    aux1-> dato      = aux2 -> dato;
+
+                    aux2 ->prioridad = pAux;
+                    aux2 ->dato      = cAux;
+                }
+
+                aux2 = aux2 -> sgte;
+            }
+
+            aux1 = aux1 ->sgte;
+        }
+
 }
- 
-/*                Eliminar todos los elementos de la pila      
-------------------------------------------------------------------------*/
-void destruir_pila( ptrPila &p)
-{
-     ptrPila aux;
-     
-     while( p != NULL)
-     {
-           aux = p;
-           p = aux->sgte;
-           delete(aux);
-     }
+
+//INSERTAR STRING
+
+
+void insert(struct cola &q, string c, int pr){
+
+    encolar(q,c,pr);
+    ordenarPrioridad(q);
+
 }
- 
-/*                        Menu de opciones    
-------------------------------------------------------------------------*/
-void menu()
-{
-    cout<<"\n\t IMPLEMENTACION DE PILAS EN C++\n\n";
-    cout<<" 1. APILAR                                "<<endl;
-    cout<<" 2. DESAPILAR                             "<<endl;
-    cout<<" 3. MOSTRAR PILA                          "<<endl;
-    cout<<" 4. DESTRUIR PILA                         "<<endl;
-    cout<<" 5. SALIR                                 "<<endl;
- 
-    cout<<"\n INGRESE OPCION: ";
+
+//MENU
+
+void menu(){
+
+    cout<<"\n\t COLAS CON PRIORIDAD \n\n";
+    cout<<" 1. ENCOLAR                      "<<endl;
+    cout<<" 2. MOSTRAR                      "<<endl;
+    cout<<" 3. SALIR                        "<<endl;
+
+    cout<<"\n INGRESE LA OPCION: ";
+
 }
- 
-/*                        Funcion Principal        
-------------------------------------------------------------------------*/
-int main()
-{
-    ptrPila p = NULL;  // creando pila
-    int dato;
-    int op;
-    int x ; // numero que devuelve la funcon pop
-   
-    system("color 0b");
- 
-    do
-    {
-        menu();  cin>> op;
- 
-        switch(op)
-        {
-            case 1:
- 
-                 cout<< "\n NUMERO A APILAR: "; cin>> dato;
-                 push( p, dato );
-                 cout<<"\n\n\t\tNumero " << dato << " apilado...\n\n";
-            break;
- 
- 
-            case 2:
- 
-                 x = pop( p );
-                 cout<<"\n\n\t\tNumero "<< x <<" desapilado...\n\n";
-            break;
-                 
- 
-            case 3:
- 
-                 cout << "\n\n MOSTRANDO PILA\n\n";
-                 if(p!=NULL)
-                    mostrar_pila( p );
-                 else
-                    cout<<"\n\n\tPila vacia..!"<<endl;
-            break;
- 
- 
-            case 4:
- 
-                 destruir_pila( p );
-                 cout<<"\n\n\t\tPila eliminada...\n\n";
-            break;
-           
-         }
- 
-        cout<<endl<<endl;
-        system("pause");  system("cls");
- 
-    }while(op!=5);
-   
-   
+
+
+///MAIN
+
+int main(){
+
+    struct cola q;
+
+    q.frente = NULL;
+    q.atras  =NULL;
+
+
+    string c;
+    int pr,op,x;
+
+    do{
+        menu();
+        cin>>op;
+
+        switch(op){
+        case 1:
+
+            cout<<"igrese el nombre"<<endl;
+            cin>>c;
+            cout<<"ingrese prioridad"<<endl;
+            cin>>pr;
+
+            insert(q,c,pr);
+
+            break
+        case 2:
+            cout<<"Mostrando Cola"<<endl;
+
+            if(q.frente == NULL){
+
+                cout<<"cola vacia"<<endl;
+
+            }else{
+                muestracola(q);
+            }
+
+        case 3:
+             cout<<"Saliendo..."<<endl;
+             break
+
+        }
+
+        system("pause");
+        system("cls");
+
+
+    }white(op!=3);
+
+
     return 0;
 }

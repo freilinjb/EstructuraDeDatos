@@ -2,7 +2,6 @@
 #include<cstdlib>
 #include <cmath>
 
-#define maxchar 50
 
 using namespace std;
 
@@ -70,10 +69,7 @@ void procesar(Lista &lista) {
         registrar(lista,abs(primero - segundo));
         cantidad = 0;
     }
-
-
-    cout << "cantidad: "<< cantidad << "\t primero: "<< primero << "\tSegundo: " << segundo<< endl;
-
+    // cout << "cantidad: "<< cantidad << "\t primero: "<< primero << "\tSegundo: " << segundo<< endl;
 }
 
 void listar(Lista q){
@@ -176,7 +172,5 @@ int main(void){
             cout<<endl;
 
         }while(op!=6);
-
-
     return 0;
 }

@@ -138,7 +138,7 @@ void insertar( struct cola &q, const string nombre, const string lesion, int pri
 
 void menu()
 {
-    cout<<"\n\t COLAS CON GRAVEDAD \n\n";
+    cout<<"\t COLAS CON GRAVEDAD\n";
     cout<<" 1. REGISTRAR PACIENTE                "<<endl;
     cout<<" 2. MOSTRAR COLA                      "<<endl;
     cout<<" 3. ATENDER PACIENTE                  "<<endl;
@@ -170,37 +170,37 @@ int main()
                  cout<< "\n Ingrese el nombre: ";
                  getline(cin, nombre);
 
-                cout<< "\n Ingrese la descripcion de la lesion: ";
+                cout<< "Ingrese la descripcion de la lesion: ";
                  getline(cin, lesion);
                  
-                 cout<< "\n Ingrese la gravedad: ";   
+                 cout<< "Ingrese la gravedad: ";   
                  cin>> gravedad;
                  
                  insertar( q, nombre, lesion, gravedad );
                  
-                 cout<<"\n\n\t\tDato '" << nombre <<"|"<<lesion<< "' encolado...\n\n";
+                 cout<<"\t\tDato '" << nombre <<"|"<<lesion<< "' encolado...\n\n";
             break; 
                   
             case 2:
 
-                 cout << "\n\n MOSTRANDO COLA DE PRIORIDAD\n\n";
+                 cout << " MOSTRANDO COLA DE PRIORIDAD\n\n";
                  
                  if(q.delante!=NULL)
                      muestraCola( q );
                  else   
-                    cout<<"\n\n\tCola vacia...!"<<endl;
+                    cout<<"\tCola vacia...!"<<endl;
             break;
 
             
             case 3:
-                cout << "\n\n ATENDIENDO AL PACIENTE\n\n";
+                cout << "ATENDIENDO AL PACIENTE\n";
                  
                 cout<<desencolar(q)<<endl;
             break;
 
             
             default:
-                    cout<<"\n\tOpcion incorecta..!"<<endl;
+                    cout<<"\tOpcion incorecta..!"<<endl;
                     system("read");
                     exit(0);
          }

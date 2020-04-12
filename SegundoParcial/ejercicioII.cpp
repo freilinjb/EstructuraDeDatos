@@ -268,7 +268,7 @@ void mostrarCola(Cola q){
         cout << "[" <<aux->dato << "]" << endl;
         aux = aux->siguiente;
     }
-    cout << "\n\n**[precione una tecla para continuar]**" << endl;
+    cout << "**[precione una tecla para continuar]**" << endl;
     getchar();
     getchar();
 }
@@ -288,7 +288,7 @@ void vaciaCola(Cola &q) {
 }
 
 void menuCola() {
-    cout<<"\n\t IMPLEMENTACION DE COLAS EN C++\n\n";
+    cout<<"\t IMPLEMENTACION DE COLAS EN C++\n";
     cout<<" 1. ENCOLAR                               "<<endl;
     cout<<" 2. DESENCOLAR                            "<<endl;
     cout<<" 3. MOSTRAR COLA                          "<<endl;
@@ -313,29 +313,29 @@ int main(int argc, char const *argv[])
     menuCola();
     do
     {
-        cout<<"\n INGRESE OPCION: ";
+        cout<<"INGRESE OPCION: ";
         cin>> op;
  
         switch(op)
         {
             case 1:
  
-                 cout<< "\n NUMERO A ENCOLAR: "; cin>> dato;
+                 cout<< "NUMERO A ENCOLAR: "; cin>> dato;
                  encolar( q, dato );
-                 cout<<"t\tNumero " << dato << " encolado...\n\n";
+                 cout<<"\tNumero " << dato << " encolado...";
             break;
  
  
             case 2:
  
                  x = desencolar( q );
-                 cout<<"\n\n\t\tNumero "<< x <<" desencolado...\n\n";
+                 cout<<"\t\tNumero "<< x <<" desencolado...";
             break;
                  
  
             case 3:
  
-                 cout << " MOSTRANDO COLA\n\n";
+                 cout << " MOSTRANDO COLA";
                  if(q.delante!=NULL) mostrarCola( q );
                  else   cout<<"\tCola vacia...!"<<endl;
             break;
@@ -344,17 +344,17 @@ int main(int argc, char const *argv[])
             case 4:
  
                  vaciaCola( q );
-                 cout<<"\t\tHecho...\n\n";
+                 cout<<"\t\tHecho...";
             break;
 
             case 6:
  
                  pila1.mostrarDatos();
-                 cout<<"\t\tHecho...\n\n";
+                 cout<<"\t\tHecho...";
             break;
                 case 7:
                 procesarPila();
-                 cout<<"\t\tHecho...\n\n";
+                 cout<<"\t\tHecho...";
             break;
            
          }

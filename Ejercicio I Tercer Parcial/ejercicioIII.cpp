@@ -121,7 +121,7 @@ public:
 
     void menuLDME(void){
 
-        cout<<"\n\t\t[     LISTA DOBLEMENTE ENLAZADA NUMEROS     ]\n";
+        cout<<"\t\t[     LISTA DOBLEMENTE ENLAZADA NUMEROS     ]\n";
         cout<<"\t\t----------------------------------\n\n";
         cout<<" 1. REGISTRAR AL INICIO                         "<<endl;
         cout<<" X. REGISTRAR AL FINAL        (ELIMINADA)                 "<<endl;
@@ -178,7 +178,7 @@ typedef struct nodo *Lista;
 
 void menuLista(void){
 
-    cout<<"\n\t\t[     LISTA EN LAZADADE NUMEROS     ]\n";
+    cout<<"\t\t[     LISTA EN LAZADADE NUMEROS     ]\n";
     cout<<"\t\t----------------------------------\n\n";
     cout<<" 1. REGISTRAR NUMERO                         "<<endl;
     cout<<" 2. LISTAR NUMERO                            "<<endl;
@@ -325,7 +325,7 @@ void procesarLista(void){
     menuLista();
 
     do{
-            cout<<"\n Ingrese opcion : ";
+            cout<<" Ingrese opcion : ";
             cin>>op;
 
             switch(op){

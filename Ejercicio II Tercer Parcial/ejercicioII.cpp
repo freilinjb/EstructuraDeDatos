@@ -14,7 +14,7 @@ struct nodo
     struct nodo *sgte;
 };
 
-struct cola
+struct Lista
 {
     nodo *delante;
     nodo *atras  ;
@@ -34,7 +34,7 @@ void limpiarBuffer() {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-void encolar( struct cola &q,const string palabra)
+void encolar( struct Lista &q,const string palabra)
 {
      
      struct nodo *aux = crearNodo(palabra);
@@ -49,7 +49,7 @@ void encolar( struct cola &q,const string palabra)
      q.atras = aux;        
 }
 
-void muestraCola( struct cola q )
+void muestraCola( struct Lista q )
 {
      struct nodo *aux;
      int width = 10;
@@ -65,7 +65,7 @@ void muestraCola( struct cola q )
      }    
 }
 
-string desencolar(cola &q) {
+string desencolar(Lista &q) {
     string dato;
     struct nodo *aux;
 
@@ -77,7 +77,7 @@ string desencolar(cola &q) {
     return dato;
 }
 
-void ordenarPalabra( struct cola &q )
+void ordenarPalabra( struct Lista &q )
 {
      struct nodo *aux1, *aux2;
      int p_aux;
@@ -107,7 +107,7 @@ void ordenarPalabra( struct cola &q )
      }
 }
 
-void insertar( struct cola &q, const string palabra)
+void insertar( struct Lista &q, const string palabra)
 {
      encolar( q, palabra);
      
@@ -116,9 +116,9 @@ void insertar( struct cola &q, const string palabra)
 
 void menu()
 {
-    cout<<"\t COLAS CIRCULAR "<<endl;
-    cout<<" 1. ENCOLAR       "<<endl;
-    cout<<" 2. MOSTRAR COLA  "<<endl;
+    cout<<"\t LISTA CIRCULAR "<<endl;
+    cout<<" 1. REGISTRAR       "<<endl;
+    cout<<" 2. MOSTRAR LISTA  "<<endl;
     cout<<" 3. SALIR         "<<endl;
 
 }
@@ -127,7 +127,7 @@ int main()
 {
     system("clear");
 
-    struct cola q;
+    struct Lista q;
     
     q.delante = NULL;
     q.atras   = NULL;
@@ -152,12 +152,12 @@ int main()
                  
                  insertar( q, palabra );
                  
-                 cout<<"\t\tDato '" << palabra << "' encolado..."<<endl;
+                 cout<<"\t\tDato '" << palabra << "' listado..."<<endl;
             break; 
                   
             case 2:
 
-                 cout << " MOSTRANDO COLA CIRCULAR"<<endl;
+                 cout << " MOSTRANDO LISTA CIRCULAR"<<endl;
                  
                  if(q.delante!=NULL)
                      muestraCola( q );

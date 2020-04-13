@@ -19,7 +19,10 @@ void mostrar();
 void buscarElemento();
 void eliminarElemento();
 void eliminarElementos();
-
+void procesarInsercion();
+void procesarInsercionInicio(int);
+void procesarInsercionFinal(int);
+int sumatoria = 0;
 /*                        Funcion Principal
 ---------------------------------------------------------------------*/
 
@@ -27,10 +30,13 @@ int main(void)
 {
     lista = NULL;
     int op;     // opcion del menu
-
+    menu();
+    
     do
     {
-        menu();
+        
+
+        cout<<"\n INGRESE OPCION: ";
         cin>>op;
 
         switch(op)
@@ -58,6 +64,10 @@ int main(void)
                     eliminarElementos();
                     break;
 
+            case 8:
+                    procesarInsercion();
+                    break;
+
             default: cout<<"OPCION NO VALIDA...!!!";
                      break;
 
@@ -73,6 +83,32 @@ int main(void)
 
 //////////////////////MOSTRAR MENU///////////////////////////////
 
+void procesarInsercion() {
+    nodo *nuevo;
+    nuevo=new struct nodo;
+    
+    string valorString;
+    long valorLong;
+
+
+    cout<<"\n***INSERTA AL INICIO*****\n";
+    cout<<"\nINGRESE DATO:";
+    cin>>valorLong;
+
+    valorString = to_string(valorLong);
+    cout << "valor en string: " << valorString<<"\nValor en long: " << valorLong<<endl;
+
+    for(int i = 0; i < valorString.size(); i++) {
+        char x = char(valorString[i]);
+        sumatoria += (int)x - '0';
+        cout << "valor" << sumatoria << endl;
+
+        procesarInsercionInicio((int)x - '0');
+    }
+    
+    cout << "sumatoria: "<< sumatoria<<endl;
+}
+
 void menu()
 {
     cout<<"\n\t\tLISTA ENLAZADA CIRCULAR\n\n";
@@ -83,11 +119,33 @@ void menu()
     cout<<" 5. ELIMINAR ELEMENTO 'V'            "<<endl;
     cout<<" 6. ELIMINAR ELEMENTOS CON VALOR 'V' "<<endl;
     cout<<" 7. SALIR                            "<<endl;
-
-    cout<<"\n INGRESE OPCION: ";
+    cout<<" 8. Prueba                           "<<endl;
 }
 
-//////////////////////INSERTAR AL INICIO//////////////////////////
+void procesarInsercionInicio(int dato) {
+    nodo *nuevo;
+    nuevo=new struct nodo;
+    cout <<"dato en la funcion: "<< dato <<endl;
+    nuevo->nro = dato;
+    nuevo->sgte=NULL;
+
+   if(lista==NULL)
+    {
+        lista=nuevo;
+        lista->sgte=lista;
+        fin=nuevo;
+      }
+   else
+     {
+        nuevo->sgte = lista;
+        lista = nuevo;
+        fin->sgte = lista;
+     }
+
+    delete(nuevo);
+}
+
+
 
 void insertarInicio()
 {
@@ -112,7 +170,6 @@ void insertarInicio()
         lista = nuevo;
         fin->sgte = lista;
      }
-
 }
 //////////////////INSERTAR AL FINAL/////////////////////
 void insertarFinal()
@@ -139,8 +196,7 @@ void insertarFinal()
         }
 }
 
-void mostrar()
-{   nodo *aux;
+void mostrar() {   nodo *aux;
     aux=lista;
     int i=1;
 
@@ -158,11 +214,9 @@ void mostrar()
 
 }
 
-void buscarElemento() //esta funcion muestra la posicion del primer dato coincidente
-                      //encontrado en la lista
-{
+void buscarElemento() {
      nodo *aux;
-     int i = 1, valor , flag = 0;
+     int i = 1 , flag = 0,valor;
 
      cout<<"INGRESE ELEMENTO A BUSCAR:";
      cin>>valor;
@@ -272,7 +326,7 @@ void eliminarElemento()
 
 
 }
-//////////////////////ELIMINAR REPETIDOS/////////////////////
+
 void eliminarElementos()
 {
      nodo *aux, *r, *q;

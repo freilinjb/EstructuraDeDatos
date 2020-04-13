@@ -12,7 +12,7 @@ struct nodo{
 nodo *fin;//puntero que ira siempre al final de la lista
 nodo *lista;//puntero que para nosotros apuntara a la cabeza de nuestra lista
 
-void menu1(); //declaramos las funciones a usar
+void menu(); //declaramos las funciones a usar
 void insertarInicio();
 void insertarFinal();
 void mostrar();
@@ -30,7 +30,7 @@ int main(void)
 
     do
     {
-        menu1();
+        menu();
         cin>>op;
 
         switch(op)
@@ -65,7 +65,6 @@ int main(void)
         }
 
         cout<<endl<<endl;
-        system("pause");  system("cls");
 
     }while(op!=7);
 
@@ -74,7 +73,7 @@ int main(void)
 
 //////////////////////MOSTRAR MENU///////////////////////////////
 
-void menu1()
+void menu()
 {
     cout<<"\n\t\tLISTA ENLAZADA CIRCULAR\n\n";
     cout<<" 1. INSERTAR AL INICIO               "<<endl;
@@ -120,8 +119,8 @@ void insertarFinal()
 {
     nodo *nuevo;
     nuevo=new struct nodo;
-    cout<<"\n***INSERTA AL INICIO*****\n";
-    cout<<"\nINGRESE DATO:";
+    cout<<"***INSERTA AL INICIO*****\n";
+    cout<<"INGRESE DATO:";
     cin>>nuevo->nro;
     nuevo->sgte=NULL;
 
@@ -139,7 +138,7 @@ void insertarFinal()
           fin = nuevo;
         }
 }
-//////////////////MOSTRAR TODOS LOS DATOS////////////////////////
+
 void mostrar()
 {   nodo *aux;
     aux=lista;
@@ -154,18 +153,18 @@ void mostrar()
           }while(aux!=lista);
       }
      else
-         cout<<"\n\n\tLista vacia...!"<<endl;
+         cout<<"\tLista vacia...!"<<endl;
 
 
 }
-//////////////////BUSCAR ELEMENTO///////////////////////
+
 void buscarElemento() //esta funcion muestra la posicion del primer dato coincidente
                       //encontrado en la lista
 {
      nodo *aux;
      int i = 1, valor , flag = 0;
 
-     cout<<"\nINGRESE ELEMENTO A BUSCAR:";
+     cout<<"INGRESE ELEMENTO A BUSCAR:";
      cin>>valor;
      if(lista !=NULL)
      {
@@ -175,7 +174,7 @@ void buscarElemento() //esta funcion muestra la posicion del primer dato coincid
           {
                if(aux->nro == valor)
                {
-                   cout<<"\n\n Encontrado en posicion "<< i <<endl;
+                   cout<<"Encontrado en posicion "<< i <<endl;
                    flag=1;
                }
                else
@@ -185,20 +184,20 @@ void buscarElemento() //esta funcion muestra la posicion del primer dato coincid
                }
           }while(aux!=lista);
 
-          if(flag==0) cout<<"\n\n\tNumero no econtrado..!"<<endl;
+          if(flag==0) cout<<"\tNumero no econtrado..!"<<endl;
 
      }
      else
-         cout<<"\n\n\tLista vacia...!"<<endl;
+         cout<<"\tLista vacia...!"<<endl;
 
 }
-////////////////ELIMINAR ELEMENTO DETERMINADO//////////////////////
+
 void eliminarElemento()
 {
     nodo *aux, *r, *q;
     int i = 1, flag = 0,valor;
 
-    cout<<"\n INGRESE ELEMENTO A ELIMINAR:";
+    cout<<"INGRESE ELEMENTO A ELIMINAR: ";
     cin>>valor;
 
     if(lista !=NULL)
@@ -220,13 +219,13 @@ void eliminarElemento()
                             lista==NULL;
                             aux==NULL;
                             delete(r);
-                            cout<<"\nELEMENTO ELIMINADO...!!!\n";
+                            cout<<"ELEMENTO ELIMINADO...!!!\n";
                             return;
                         }
                         else
                         {
                             delete(r);
-                            cout<<"\nELEMENTO ELIMINADO...!!!\n";
+                            cout<<"ELEMENTO ELIMINADO...!!!\n";
                             return;
                         }
                     }
@@ -240,7 +239,7 @@ void eliminarElemento()
                             fin=q;
                             r->sgte=NULL;
                             delete(r);
-                            cout<<"\nELEMENTO ELIMINADO...!!!\n";
+                            cout<<"ELEMENTO ELIMINADO...!!!\n";
                             return;
                             }
                         else
@@ -250,7 +249,7 @@ void eliminarElemento()
                             q->sgte=aux;
                             r->sgte=NULL;
                             delete(r);
-                            cout<<"\nELEMENTO ELIMINADO...!!!\n";
+                            cout<<"ELEMENTO ELIMINADO...!!!\n";
                             return;
                         }
                   }
@@ -264,7 +263,7 @@ void eliminarElemento()
           }while(aux!=lista);
 
           if(flag==0)
-          cout<<"\n\n\tNumero no econtrado..!"<<endl;
+          cout<<"\tNumero no econtrado..!"<<endl;
 
 
     }
@@ -279,7 +278,7 @@ void eliminarElementos()
      nodo *aux, *r, *q;
      int  flag = 0,valor;
 
-     cout<<"\n DATO REPETIDO A ELIMINAR:";
+     cout<<"DATO REPETIDO A ELIMINAR: ";
      cin>>valor;
 
      if(lista !=NULL)
@@ -355,7 +354,7 @@ void eliminarElementos()
           }while(aux!=lista);
 
           if(flag==0)
-            cout<<"\n\n\tNumero no econtrado..!"<<endl;
+            cout<<"\tNumero no econtrado..!"<<endl;
         }
           else
             cout<<"LISTA VACIA...!!!!";

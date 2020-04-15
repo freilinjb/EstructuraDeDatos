@@ -33,7 +33,7 @@ struct Producto {
 
     void imprimir() const {
         int width = 15;
-            cout  << nombre<<  right << cantidad << setw(width) << endl;   
+            cout  << nombre<<  setw(width) << right << cantidad << endl;   
     }
 };
 list<Producto> productos;
@@ -105,6 +105,8 @@ void mosatrarProductosPorCliente(list<Producto> prod) {
     while(itr != prod.end()){
         cin.clear();
         fflush(stdin);
+        cout <<"["<< 1+cantidad <<"] ";
+
         itr->imprimir();
         ++itr;
         cantidad++;

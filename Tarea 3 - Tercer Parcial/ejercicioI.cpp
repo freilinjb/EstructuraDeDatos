@@ -13,15 +13,12 @@ struct nodo{
     struct nodo *sgte;
 };
 
-
 typedef struct nodo *Lista;
 
 struct cola {
     nodo *delante;
     nodo *atras;
 };
-
-struct cola Cajas;
 
 struct Producto {
     string nombre;
@@ -39,10 +36,25 @@ struct Producto {
     }
 };
 list<Producto> productos;
-int carritoSeleccionado = 0;
 int cantidadProducto = 0;
 
-Producto seleccionarProducto(const int opcion, const int cantidadProducto) {
+struct clienteNodo {
+    string nombre;
+    string carrito;
+    list<Producto> producto;
+    string estado;
+    struct clienteNodo *sgte;
+};
+
+typedef struct clienteNodo *Cliente;
+
+int cantidadCarrito = 0;
+int cantidadCliente = 0;
+
+//Variables blobales
+struct cola q;
+
+Producto seleccionarProducto(int opcion) {
     int cantidad = 0;
     Producto nombre;
     cin.clear();
@@ -60,8 +72,8 @@ Producto seleccionarProducto(const int opcion, const int cantidadProducto) {
 
         if(cantidad == opcion) {
             nombre.nombre = itr->nombre;
-            nombre.cantidad = cantidadProducto;
-            cout <<"\n\t["<< cantidad+1 <<"] ";
+            nombre.cantidad = itr->cantidad;
+            cout <<"["<< 1+cantidad <<"] ";
             cout << "nombre: " <<nombre.nombre<<endl;
             break;
         }
@@ -117,47 +129,41 @@ void mosatrarProductosPorCliente(list<Producto> prod) {
     cout << "Cantidad de registros: " << cantidad << endl;
 }
 
-struct clienteNodo {
-    string nombre;
-    string carrito;
-    list<Producto> producto;
-    string estado;
-    struct clienteNodo *sgte;
-};
-
-typedef struct clienteNodo *Cliente;
-
-int cantidadCarrito = 0;
-int cantidadCliente = 0;
-
-//VARIABLES GLOBALES
-Lista lista=NULL;
-
-Cliente cliente = NULL;
-
-string seleccionarCarritoCliente(Lista carrito) {
-    Lista temp = carrito;
-    int opcion;
-    int cantidad = 0;
-    string cart;
-
-    cout<<"\n[  LISTA DE CARRITOOS  ]"<<endl;
-    int width = 15;
-
-    cout <<right << "Carrito" << setw(width) << "Estado"  <<endl;    
-
-    while(lista!=NULL){
-        if(lista->estado) {
-            cout <<setw(width-10)  << lista->dato << setw(width+5) <<(lista->estado ? "Disponible" : "Ocupado") <<endl;
-        }
-        lista=lista->sgte;
-    }
-    carritoSeleccionado++;
-    return "#carrito"+to_string(carritoSeleccionado);
-}
-
 //NO SE ESTA USANDO
+void registraCliente(Cliente &cliente){
 
+    Cliente t,q = new(struct clienteNodo);
+    int codigoProducto;
+    cout<<"\t\t[  REGISTRO DE CARRITO  ]\n";
+    cout << "Nombre del Cliente: ";
+    cin.ignore();
+    getline(cin,q->nombre);
+    cout << "Lista de Productos"<< endl;
+
+    mosatrarProductos();
+
+    cout << "Seleccione los Productos por su codigo: (0 para SALIR)";
+    
+    do {
+        cin >> codigoProducto;
+        q->producto.push_back(seleccionarProducto(codigoProducto));
+
+    }while (codigoProducto != 0);
+    
+
+    q->sgte = NULL;
+
+    if(cliente==NULL){
+        cliente = q;
+    } else {
+        t = cliente;
+        while(t->sgte!=NULL){
+                t = t->sgte;
+        }
+        t->sgte = q;
+    }
+    cantidadCliente++;
+}
 
 void listarCliente(Cliente cliente){
 
@@ -177,7 +183,6 @@ void listarCliente(Cliente cliente){
     }
 
 }
-
 
 void encolarCaja(struct cola &q, string dato) {
     struct nodo *aux = new(struct nodo);
@@ -255,7 +260,7 @@ void registra(Lista &lista){
     }
     cantidadCarrito++;
 }
-void registrarCarrito(){
+void registrarCarrito(Lista &lista){
 
     Lista t,q = new(struct nodo);
 
@@ -278,7 +283,7 @@ void registrarCarrito(){
     cantidadCarrito++;
 }
 
-void registrarCarrito(const string dato){
+void registrarCarrito(Lista &lista, const string dato){
 
     Lista t,q = new(struct nodo);
 
@@ -299,28 +304,26 @@ void registrarCarrito(const string dato){
 
 }
 
-void listarCarritos(Lista carrito){
+void listarCarrito(Lista q){
 
     int i=1;
-    int cantidad = 0;
     cout<<"[  LISTA DE CARRITOOS  ]"<<endl;
     int width = 15;
 
     cout <<right << "Carrito" << setw(width) << "Estado"  <<endl;    
 
-    while(carrito!=NULL){
-        cantidad++;
-        cout<<"["<< cantidad <<"] ";
-        cout <<setw(width-10)  << carrito->dato << setw(width+5)<<(carrito->estado ? "Disponible" : "Ocupado") <<endl;
+    while(q!=NULL){
 
-        carrito=carrito->sgte;
+        cout <<setw(width-10)  << q->dato << setw(width+5) <<(q->estado ? "Disponible" : "Ocupado") <<endl;
+
+        q=q->sgte;
 
         i++;
     }
 
 }
 
-void eliminarCarrito(){
+void eliminarCarrito(Lista &lista){
 
     string cod;
     Lista q,t;
@@ -333,22 +336,17 @@ void eliminarCarrito(){
     }else{
 
         cout<<"\tELIMINAR UN CARRITOO";
+        cout<<"\tINGRESE CELULAR:"; cin>>cod;
 
         while(q!=NULL){
-            cout<<"hola "<<endl;
+
             if(q->dato==cod){
 
-                if(q==lista){
+                if(q==lista)
                     lista=lista->sgte;
-                    lista->estado = false;
-                }
 
-                else{
+                else
                     t->sgte=q->sgte;
-                    lista->estado = false;
-                }
-
-                t->sgte->estado = false;
 
                 delete(q);
 
@@ -360,11 +358,13 @@ void eliminarCarrito(){
 
                 t=q;
                 q=q->sgte;
+
         }
 
     }
     if(q==NULL)
-        cout<<"\n\tESTA VACIO...!!\n";
+        cout<<"\n\tCODIGO INCORRECTO...!!\n";
+
     }
 }
 
@@ -400,45 +400,38 @@ void menuCarrito() {
 
 void procesarCaja() {
     system("clear");
-
-    Cajas.delante = NULL;
-    Cajas.atras   = NULL;
+    
     string dato;  // numero a encolar
     string x ;    
-
-    for(int i = 0; i < 3; i++) {
-        
-        encolarCaja(Cajas, "#"+to_string(i+1));
-    }
-   
 
     int op;
 
     do{
             menuCaja();
+
             cout<<"\n Ingrese opcion : ";
             cin>>op;
 
             switch(op){
 
                 case 1: cout<< "\n NUMERO A ENCOLAR: "; cin>> dato;
-                        encolarCaja( Cajas, dato );
+                        encolarCaja( q, dato );
                         cout<<"\t\tNumero " << dato << " encolado..."<<endl;
                     break;
         
         
-                case 2: x = desencolarCaja( Cajas );
+                case 2: x = desencolarCaja( q );
                         cout<<"\t\tNumero "<< x <<" desencolado..."<<endl;
                     break;
                         
         
                 case 3: cout << "\n\n MOSTRANDO COLA\n\n";
-                        if(Cajas.delante!=NULL) muestraCola( Cajas );
+                        if(q.delante!=NULL) muestraCola( q );
                         else   cout<<"\tCola vacia...!"<<endl;
                     break;
         
         
-                case 4: vaciarCola( Cajas );
+                case 4: vaciarCola( q );
                         cout<<"\t\tHecho..."<<endl;
                     break;
 
@@ -455,24 +448,26 @@ void procesarCarritos() {
     string x ;    
 
     //CARRITO
+    Lista lista=NULL;
 
-   
+    
 
     int op;
 
     do{
-         menuCarrito();
+        menuCarrito();
+
         cout<<"\n Ingrese opcion : ";
         cin>>op;
 
         switch(op){
-            case 1: registrarCarrito();
+            case 1: registrarCarrito(lista);
                     break;
 
-            case 2: listarCarritos(lista);
+            case 2: listarCarrito(lista);
                     break;
 
-            case 3: eliminarCarrito();
+            case 3: eliminarCarrito(lista);
                     break;
 
             case 4: cout << "[SALISTE DE LAS LISTAS]"<<endl;
@@ -482,45 +477,16 @@ void procesarCarritos() {
     }while(op!=4);
 }
 
-void registraCliente(Cliente &cliente){
-
-    Cliente t,q = new(struct clienteNodo);
-    int codigoProducto;
-    int cantidadProducto;
-    cout<<"\t\t[  REGISTRO DE CARRITO  ]\n";
-    cout << "Nombre del Cliente: ";
-    cin.ignore();
-    getline(cin,q->nombre);
-    cout << "Lista de Productos"<< endl;
-
-    mosatrarProductos();
-
-    cout << "Seleccione los Productos por su codigo: (0 para SALIR)";
-    
-    do {
-        cout<<"codigo Producto: ";
-        cin >> codigoProducto;
-        cout<<"Cantidad: ";
-        cin >> cantidadProducto;
-
-
-        q->producto.push_back(seleccionarProducto(codigoProducto,cantidadProducto));
-
-        cout << "Continuar: 1\nSalir: 0 "<<endl;
-
-
-    }while (codigoProducto != 0 || cantidadProducto != 0);
-
-    q->carrito = seleccionarCarritoCliente(lista);
-    // listarCarritos(lista);
-}
-
 void procesarCliente() {
     system("clear");
 
+    q.delante = NULL;
+    q.atras   = NULL;
     string x ;    
 
     //CARRITO
+    Cliente cliente;
+    cliente = NULL;
 
     
 
@@ -528,6 +494,7 @@ void procesarCliente() {
 
     do{
         menuCliente();
+
         cout<<"\n Ingrese opcion : ";
         cin>>op;
 
@@ -538,7 +505,7 @@ void procesarCliente() {
             case 2: listarCliente(cliente);
                     break;
 
-            // case 3: eliminarCarrito();
+            // case 3: eliminarCarrito(cliente);
             //         break;
 
             case 4: cout << "[SALISTE DE LAS LISTAS]"<<endl;
@@ -596,16 +563,15 @@ int main(void){
         productos.push_front(p[i]);
     }
 
-    for(int i = 0; i < 25; i++) {
-        
-        registrarCarrito("#"+to_string(i+1));
-    }
 
-    system("clear");
-        struct cola q;
+    for(int i = 0; i < 3; i++) {
+        
+        encolarCaja(q, "#"+to_string(i+1));
+    }
    
     q.delante = NULL;
     q.atras   = NULL;
     procesarTodo();
     
+    return 0;
 }

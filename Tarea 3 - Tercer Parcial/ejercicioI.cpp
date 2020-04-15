@@ -133,6 +133,7 @@ int cantidadCliente = 0;
 //VARIABLES GLOBALES
 Lista lista=NULL;
 
+Cliente cliente = NULL;
 
 string seleccionarCarritoCliente(Lista carrito) {
     Lista temp = carrito;
@@ -332,17 +333,22 @@ void eliminarCarrito(){
     }else{
 
         cout<<"\tELIMINAR UN CARRITOO";
-        cout<<"\tINGRESE CELULAR:"; cin>>cod;
 
         while(q!=NULL){
-
+            cout<<"hola "<<endl;
             if(q->dato==cod){
 
-                if(q==lista)
+                if(q==lista){
                     lista=lista->sgte;
+                    lista->estado = false;
+                }
 
-                else
+                else{
                     t->sgte=q->sgte;
+                    lista->estado = false;
+                }
+
+                t->sgte->estado = false;
 
                 delete(q);
 
@@ -354,13 +360,11 @@ void eliminarCarrito(){
 
                 t=q;
                 q=q->sgte;
-
         }
 
     }
     if(q==NULL)
-        cout<<"\n\tCODIGO INCORRECTO...!!\n";
-
+        cout<<"\n\tESTA VACIO...!!\n";
     }
 }
 
@@ -517,8 +521,6 @@ void procesarCliente() {
     string x ;    
 
     //CARRITO
-    Cliente cliente;
-    cliente = NULL;
 
     
 
@@ -536,7 +538,7 @@ void procesarCliente() {
             case 2: listarCliente(cliente);
                     break;
 
-            // case 3: eliminarCarrito(cliente);
+            // case 3: eliminarCarrito();
             //         break;
 
             case 4: cout << "[SALISTE DE LAS LISTAS]"<<endl;

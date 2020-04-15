@@ -4,27 +4,26 @@
 using namespace std;
 
 struct nodo{
-            int nro;    //los datos seran de tipo entero
-            struct nodo *sgte; //puntero
-            };
+    int nro;    
+    struct nodo *sgte;
+};
 
-// typedef struct nodo;//definimos a nodo como un tipo de variable
-nodo *fin;//puntero que ira siempre al final de la lista
-nodo *lista;//puntero que para nosotros apuntara a la cabeza de nuestra lista
+nodo *fin;
+nodo *lista;
 
-void menu(); //declaramos las funciones a usar
-void insertarInicio();
-void insertarFinal();
+void menu();
+void insertarInicio(int);
+void insertarFinal(int);
 void mostrar();
 void buscarElemento();
 void eliminarElemento();
 void eliminarElementos();
 void procesarInsercion();
-void procesarInsercionInicio(int);
-void procesarInsercionFinal(int);
+void procesarInicio(int);
+void procesarFinal(int);
+void insertarInicio2(int);
 int sumatoria = 0;
-/*                        Funcion Principal
----------------------------------------------------------------------*/
+bool verificar = true;
 
 int main(void)
 {
@@ -34,19 +33,19 @@ int main(void)
     
     do
     {
-        
-
         cout<<"\n INGRESE OPCION: ";
         cin>>op;
 
         switch(op)
         {
             case 1:
-                    insertarInicio();
+                    verificar = true;
+                    procesarInsercion();
                     break;
 
             case 2:
-                    insertarFinal();
+                    verificar = false;
+                    procesarInsercion();
                     break;
             case 3:
                     cout<<"\n\n Lista Circular \n\n";
@@ -70,8 +69,6 @@ int main(void)
 
             default: cout<<"OPCION NO VALIDA...!!!";
                      break;
-
-
         }
 
         cout<<endl<<endl;
@@ -81,85 +78,50 @@ int main(void)
    return 0;
 }
 
-//////////////////////MOSTRAR MENU///////////////////////////////
-
-void procesarInsercion() {
-    nodo *nuevo;
-    nuevo=new struct nodo;
-    
+void procesarInsercion() {    
     string valorString;
     long valorLong;
-
 
     cout<<"\n***INSERTA AL INICIO*****\n";
     cout<<"\nINGRESE DATO:";
     cin>>valorLong;
 
     valorString = to_string(valorLong);
-    cout << "valor en string: " << valorString<<"\nValor en long: " << valorLong<<endl;
 
     for(int i = 0; i < valorString.size(); i++) {
         char x = char(valorString[i]);
         sumatoria += (int)x - '0';
-        cout << "valor" << sumatoria << endl;
-
-        procesarInsercionInicio((int)x - '0');
+        
+        if(verificar){
+            insertarInicio((int)x - '0');
+        } else {
+            insertarFinal((int)x - '0');
+            cout << "dato: " << (int)x - '0'<<endl;
+        }
     }
-    
-    cout << "sumatoria: "<< sumatoria<<endl;
 }
 
-void menu()
-{
+void menu() {
+    system("clear");
     cout<<"\n\t\tLISTA ENLAZADA CIRCULAR\n\n";
     cout<<" 1. INSERTAR AL INICIO               "<<endl;
     cout<<" 2. INSERTAR AL FINAL                "<<endl;
-    cout<<" 3. REPORTAR LISTA                   "<<endl;
+    cout<<" 3. MOSTRAR LISTA                    "<<endl;
     cout<<" 4. BUSCAR ELEMENTO                  "<<endl;
-    cout<<" 5. ELIMINAR ELEMENTO 'V'            "<<endl;
-    cout<<" 6. ELIMINAR ELEMENTOS CON VALOR 'V' "<<endl;
+    cout<<" 5. ELIMINAR             "<<endl;
     cout<<" 7. SALIR                            "<<endl;
-    cout<<" 8. Prueba                           "<<endl;
 }
 
-void procesarInsercionInicio(int dato) {
-    nodo *nuevo;
-    nuevo=new struct nodo;
-    cout <<"dato en la funcion: "<< dato <<endl;
-    nuevo->nro = dato;
-    nuevo->sgte=NULL;
-
-   if(lista==NULL)
-    {
-        lista=nuevo;
-        lista->sgte=lista;
-        fin=nuevo;
-      }
-   else
-     {
-        nuevo->sgte = lista;
-        lista = nuevo;
-        fin->sgte = lista;
-     }
-
-    delete(nuevo);
-}
-
-
-
-void insertarInicio()
+void insertarInicio(int dato)
 {
    nodo *nuevo;
    nuevo=new struct nodo;
 
-   cout<<"\n***INSERTA AL INICIO*****\n";
-   cout<<"\nINGRESE DATO:";
-   cin>>nuevo->nro;
+   nuevo->nro = dato;
    nuevo->sgte=NULL;
 
    if(lista==NULL)
     {
-        cout<<"PRIMER ELEMENTO..!!!";
         lista=nuevo;
         lista->sgte=lista;
         fin=nuevo;
@@ -171,19 +133,17 @@ void insertarInicio()
         fin->sgte = lista;
      }
 }
-//////////////////INSERTAR AL FINAL/////////////////////
-void insertarFinal()
+
+void insertarFinal(int dato)
 {
     nodo *nuevo;
     nuevo=new struct nodo;
-    cout<<"***INSERTA AL INICIO*****\n";
-    cout<<"INGRESE DATO:";
-    cin>>nuevo->nro;
+
+    nuevo->nro = dato;
     nuevo->sgte=NULL;
 
      if(lista==NULL)
         {
-             cout<<"PRIMER ELEMENTO..!!!";
              lista=nuevo;
              lista->sgte=lista;
              fin=nuevo;
@@ -194,24 +154,28 @@ void insertarFinal()
           nuevo->sgte = lista;
           fin = nuevo;
         }
+
 }
 
-void mostrar() {   nodo *aux;
+void mostrar() {   
+    nodo *aux;
     aux=lista;
     int i=1;
 
     if(lista!=NULL)
      {
           do
-          {    cout<<"  "<<aux->nro;
+          {    cout<<aux->nro << " ";
                aux = aux->sgte;
                i++;
           }while(aux!=lista);
+
+          cout <<"->NULL"<<endl;
       }
      else
          cout<<"\tLista vacia...!"<<endl;
 
-
+    cout<<"Sumatoria: [" << sumatoria <<"]"<<endl;
 }
 
 void buscarElemento() {
@@ -246,8 +210,7 @@ void buscarElemento() {
 
 }
 
-void eliminarElemento()
-{
+void eliminarElemento(){
     nodo *aux, *r, *q;
     int i = 1, flag = 0,valor;
 

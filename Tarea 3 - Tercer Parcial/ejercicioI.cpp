@@ -39,7 +39,7 @@ struct Producto {
 list<Producto> productos;
 int cantidadProducto = 0;
 
-Producto seleccionarProducto(int opcion) {
+Producto seleccionarProducto(const int opcion, const int cantidadProducto) {
     int cantidad = 0;
     Producto nombre;
     cin.clear();
@@ -58,7 +58,7 @@ Producto seleccionarProducto(int opcion) {
 
         if(cantidad == opcion) {
             nombre.nombre = itr->nombre;
-            nombre.cantidad = itr->cantidad;
+            nombre.cantidad = cantidadProducto;
             cout << "nombre: " <<nombre.nombre<<endl;
             break;
         }
@@ -132,6 +132,7 @@ void registraCliente(Cliente &cliente){
 
     Cliente t,q = new(struct clienteNodo);
     int codigoProducto;
+    int cantidadProducto;
     cout<<"\t\t[  REGISTRO DE CARRITO  ]\n";
     cout << "Nombre del Cliente: ";
     cin.ignore();
@@ -143,8 +144,12 @@ void registraCliente(Cliente &cliente){
     cout << "Seleccione los Productos por su codigo: (0 para SALIR)";
     
     do {
+        cout<<"codigo Producto: ";
         cin >> codigoProducto;
-        q->producto.push_back(seleccionarProducto(codigoProducto));
+        cout<<"Cantidad: ";
+        cin >> cantidadProducto;
+
+        q->producto.push_back(seleccionarProducto(codigoProducto,cantidadProducto));
 
     }while (codigoProducto != 0);
     

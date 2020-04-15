@@ -13,7 +13,15 @@
         "system_error": "cpp",
         "sstream": "cpp",
         "iomanip": "cpp",
-        "cstdlib": "cpp"
+        "cstdlib": "cpp",
+        "array": "cpp",
+        "atomic": "cpp",
+        "cwchar": "cpp",
+        "memory": "cpp",
+        "type_traits": "cpp",
+        "cmath": "cpp",
+        "new": "cpp",
+        "utility": "cpp"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

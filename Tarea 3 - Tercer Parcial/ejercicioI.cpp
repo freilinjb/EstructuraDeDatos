@@ -1,40 +1,34 @@
 
-#include<iostream>
+#include <iostream>
 #include <string>
-#include<cstdlib>
+#include <cstdlib>
+#include <iomanip>
 
 using namespace std;
 
 struct nodo{
 
     string dato; 
+    bool estado = true;
     struct nodo *sgte;
 };
 
-typedef struct Lista{
-    int dato;
-    nodo *nodo;
-};
-
-// typedef struct nodo *Lista;
-bool sexo = true;
+typedef struct nodo *Lista;
 
 void menu(void){
 
-    cout<<"\t\t----------------------------------\n\n";
-    cout<<" 1. REGISTRAR ALUMN                          "<<endl;
-    cout<<" 2. LISTAR ALUMNS                            "<<endl;
-    cout<<" 3. ELIMINAR ALUMN                           "<<endl;
+    cout<<"\t\t----------------------------------"<<endl;
+    cout<<" 1. REGISTRAR CARRITO                          "<<endl;
+    cout<<" 2. LISTAR CARRITOS                            "<<endl;
+    cout<<" 3. ELIMINAR CARRITO                           "<<endl;
     cout<<" 3. SALIR                                       "<<endl;
 }
 
-void registrar(Lista &lista){
+void registrarCarrito(Lista &lista){
 
-    Lista t,q;
+    Lista t,q = new(struct nodo);
 
-    q.nodo->dato = "dsf"
-
-    cout<<"\t\t[  REGISTRO DE ALUMNO  ]\n";
+    cout<<"\t\t[  REGISTRO DE CARRITO  ]\n";
     cout<<"\t\t------------";
     cin.ignore();cout<<"\n\tNOMBRE:";
     getline(cin,q->dato);
@@ -52,14 +46,37 @@ void registrar(Lista &lista){
     }
 }
 
-void listar(Lista q){
+void registrarCarrito(Lista &lista, const string dato){
+
+    Lista t,q = new(struct nodo);
+
+    q->dato = dato;
+
+    q->sgte = NULL;
+
+    if(lista==NULL){
+        lista = q;
+    } else {
+        t = lista;
+        while(t->sgte!=NULL){
+                t = t->sgte;
+        }
+        t->sgte = q;
+    }
+}
+
+void listarCarrito(Lista q){
 
     int i=1;
-    cout<<"\t[  LISTA DE ALUMNOS  ]";
-    cout<<"\t-------------------------"<<endl;
+    cout<<"[  LISTA DE CARRITOOS  ]"<<endl;
+    int width = 15;
+
+    cout <<right << "Carrito" << setw(width) << "Estado"  <<endl;    
+
     while(q!=NULL){
 
-        cout<<"\tNOMBRE: "<<q->nombre<<endl;
+        cout <<setw(width-10)  << q->dato << setw(width+5) <<(q->estado ? "Disponible" : "Ocupado") <<endl;
+
         q=q->sgte;
 
         i++;
@@ -67,7 +84,7 @@ void listar(Lista q){
 
 }
 
-void eliminar(Lista &lista){
+void eliminarCarrito(Lista &lista){
 
     string cod;
     Lista q,t;
@@ -79,12 +96,12 @@ void eliminar(Lista &lista){
 
     }else{
 
-        cout<<"\tELIMINAR UN ALUMNO";
+        cout<<"\tELIMINAR UN CARRITOO";
         cout<<"\tINGRESE CELULAR:"; cin>>cod;
 
         while(q!=NULL){
 
-            if(q->nombre==cod){
+            if(q->dato==cod){
 
                 if(q==lista)
                     lista=lista->sgte;
@@ -94,7 +111,7 @@ void eliminar(Lista &lista){
 
                 delete(q);
 
-                cout<<"\tALUMNO  ELIMINADO...!!!!!\n";
+                cout<<"\tCARRITOO  ELIMINADO...!!!!!\n";
 
                 return;
 
@@ -114,9 +131,16 @@ void eliminar(Lista &lista){
 
 int main(void){
 
+
+
     system("clear");
 
     Lista lista=NULL;
+
+    for(int i = 0; i < 25; i++) {
+        
+        registrarCarrito(lista, "#"+to_string(i+1));
+    }
     menu();
 
     int op;
@@ -127,13 +151,13 @@ int main(void){
 
             switch(op){
 
-                case 1: registrar(lista);
+                case 1: registrarCarrito(lista);
                         break;
 
-                case 2: listar(lista);
+                case 2: listarCarrito(lista);
                         break;
 
-                case 3: eliminar(lista);
+                case 3: eliminarCarrito(lista);
                         break;
 
                 case 4: return 0;

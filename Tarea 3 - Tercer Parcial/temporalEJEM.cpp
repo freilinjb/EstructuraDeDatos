@@ -1,390 +1,526 @@
-#include <string>
-#include <stdlib.h>
 #include <iostream>
+#include <string.h>
+#include <cstdlib>
+#include <string>
 #include <iomanip>
-#include <limits>
 
-#include <list>
+#define maxchar 50
 
 using namespace std;
 
-class Pila2
-{
-
-public:
-    // void procesar();
-    struct Nodo
-    {
-        string dato;
-        Nodo *siguiente;
-    } typedef *pila;
-
-    static void limpiarBuffer2()
-    {
-        fflush(stdin);
-        cin.clear(); // unset failbit
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-
-        void limpiarBuffer()
-    {
-        fflush(stdin);
-        cin.clear(); // unset failbit
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-
-    void agregarPila(pila &p, string n)
-    {
-        pila nuevo_nodo = new (struct Nodo);
-
-        nuevo_nodo->dato = n;
-        nuevo_nodo->siguiente = p;
-        p = nuevo_nodo;
-
-        cout << "Elemento agregado a la pila: " << n << endl;
-    }
-
-    void agregarPilaEntrada(pila &p)
-    {
-        string n;
-        cout << "**[REGISTRO DE ESTUDIANTE]**" << endl;
-        cout <<"Nombre: ";
-        limpiarBuffer();
-
-        getline(cin, n);
-
-        pila nuevo_nodo = new (struct Nodo);
-
-        nuevo_nodo->dato = n;
-        nuevo_nodo->siguiente = p;
-        p = nuevo_nodo;
-
-        cout << "Elemento agregado a la pila: " << n << endl;
-    }
-
-
-
-    string sacarPila(pila &p)
-    {
-        string dato;
-        pila aux;
-
-        aux = p;
-        dato = aux->dato;
-        p = aux->siguiente;
-
-        delete (aux);
-
-        limpiarBuffer();
-
-        return dato;
-    }
-
-    void destruir_pila(pila &p)
-    {
-        pila aux;
-
-        while (p != NULL)
-        {
-            aux = p;
-            p = aux->siguiente;
-            delete (aux);
-        }
-    }
-
-    void mostrarPila(pila p)
-    {
-        pila aux;
-        aux = p;
-
-        int cantidad = 0;
-
-        while (aux != NULL)
-        {
-            cout << "[" << aux->dato << "]" << endl;
-            aux = aux->siguiente;
-
-            cantidad++;
-        }
-        cout << " Cantidad de estudiantes registrados: " << "[" << cantidad << "]" <<endl;
-        if(cantidad >= 4) {
-            cout << "No se puede adminir mas estudiantes el maximo es 4" << endl;
-        }
-        limpiarBuffer();
-    }
-
-    void menu()
-    {
-        cout << "\n\t IMPLEMENTACION DE ESTUDIANTES EN PILAS EN C++\n\n";
-        cout << " 1. APILAR                                " << endl;
-        cout << " 2. DESAPILAR                             " << endl;
-        cout << " 3. MOSTRAR PILA                          " << endl;
-        cout << " 4. DESTRUIR PILA                         " << endl;
-        cout << " 5. SALIR                                 " << endl;
-
-        cout << "\n INGRESE OPCION: ";
-    }
-
-    int procesarPila()
-    {
-        pila p = NULL; // creando pila
-        string dato;
-        int op;
-        string x; // numero que devuelve la funcon pop
-
-        do
-        {
-            menu();
-            cin >> op;
-
-            switch (op)
-            {
-            case 1:
-
-                cout << "\n Estudiante: ";
-                limpiarBuffer();
-
-                getline(cin, dato);
-
-                agregarPila(p, dato);
-                cout << "\n\n\t\tEstudiante " << dato << " apilado...\n\n";
-                break;
-
-            case 2:
-
-                x = sacarPila(p);
-                cout << "\n\n\t\tEstudiante " << x << " desapilado...\n\n";
-                limpiarBuffer();
-
-                break;
-
-            case 3:
-                limpiarBuffer();
-
-                cout << "\n\n MOSTRANDO PILA\n\n";
-                if (p != NULL)
-                    mostrarPila(p);
-                else
-                {
-                    cout << "\n\n\tPila vacia..!" << endl;
-                    limpiarBuffer();
-                }
-                break;
-
-            case 4:
-                limpiarBuffer();
-
-                destruir_pila(p);
-                cout << "\n\n\t\tPila eliminada...\n\n";
-                break;
-            }
-
-            cout << endl
-                 << endl;
-
-        } while (op != 5);
-
-        return 0;
-    }
+struct nodo{
+    int codigo;     // campo codigo
+    string nombre; // campo que almacena el nombre
+    string estado;
+    struct nodo *sgte;
 };
 
-class Cola : protected Pila2
-{
-public:
-    Pila2 Pila;
-    struct cola
-    {
-        string materia;
-        Pila2::Nodo estudiante;
-        Pila2::Nodo *delante;
-        Pila2::Nodo *atras;
-
-        cola(const string materia)
-        {
-            this->materia = materia;
-        }
-
-        cola() {}
-    };
-
-    void encolar(cola &q, const string dato)
-    {
-        Pila2::Nodo *aux = new Pila2::Nodo();
-
-        aux->dato = dato;
-        aux->siguiente = NULL;
-
-        q.delante == NULL ? q.delante = aux : (q.atras)->siguiente = aux;
-
-        q.atras = aux;
-        q.materia = aux->dato;
-
-        char x;
-        while (true)
-        {
-            
-            limpiarBuffer();
-            cout << "Desea ingresar registrar estudiante(S/N): " << endl;
-            cin >> x;
-
-            if(x == 's' || x == 'S')
-            {
-                agregarPilaEntrada(q.estudiante.siguiente);
-            }
-            else if(x == 'n' || x == 'N'){
-                cout << "**[Adios]**" << endl;
-                break;
-            }
-
-            mostrarPila(q.estudiante.siguiente);
-        }
-    }
-
-    string desencolar(cola &q)
-    {
-        string dato;
-        Nodo *aux;
-
-        aux = q.delante;
-        dato = aux->dato;
-        q.delante = (q.delante)->siguiente;
-        delete (aux);
-
-        return dato;
-    }
-
-    void mostrarCola(cola q)
-    {
-        Nodo *aux;
-        aux = q.estudiante.siguiente;
-
-        while (aux != NULL)
-        {
-            cout << "[" << aux->dato << "]" << endl;
-            cout << "**[Lista de estudiantes ]**" << endl;
-            mostrarPila(aux);
-            aux = aux->siguiente;
-        }
-
-        cout << "\n\n**[precione una tecla para continuear]**" << endl;
-        limpiarBuffer2();
-        getchar();
-    }
-
-    void vaciarCola(cola &q)
-    {
-        Pila2::Nodo *aux;
-
-        while (q.delante != NULL)
-        {
-            aux = q.delante;
-            q.delante = aux->siguiente;
-            delete (aux);
-        }
-
-        q.delante = NULL;
-        q.atras = NULL;
-    }
-
-    void menuCola()
-    {
-        cout << "\n\t IMPLEMENTACION DE COLAS EN C++\n\n";
-        cout << " 1. ENCOLAR                               " << endl;
-        cout << " 2. DESENCOLAR                            " << endl;
-        cout << " 3. MOSTRAR COLA                          " << endl;
-        cout << " 4. VACIAR COLA                           " << endl;
-        cout << " 6. MOSTRAR PILA DE ESTUDIANTES           " << endl;
-        cout << " 5. SALIR                                 " << endl;
-
-        cout << "\n INGRESE OPCION: ";
-    }
-
-    void menuPrincipal()
-    {
-        cout << "1. Menu Mantenimiento Estudiante" << endl;
-        cout << "2. Menu Mantenimiento Asignatura" << endl;
-        cout << "SELECCIONE UNA OPCION: ";
-    }
-    void procesarCola()
-    {
-        struct cola q;
-
-        q.delante = NULL;
-        q.atras = NULL;
-
-        string dato; // numero a encolar
-        int op;      // opcion del menu
-        string x;    // numero que devuelve la funcon pop
-
-        do
-        {
-            menu();
-            cin >> op;
-
-            switch (op)
-            {
-            case 1:
-
-                cout << "\n ASIGNATURA A ENCOLAR: ";
-                cin >> dato;
-                encolar(q, dato);
-                cout << "\n\n\t\tAsignatura " << dato << " encolado...\n\n";
-                break;
-
-            case 2:
-
-                x = desencolar(q);
-                cout << "\n\n\t\tNumero " << x << " desencolado...\n\n";
-                break;
-
-            case 3:
-
-                cout << "\n\n MOSTRANDO COLA\n\n";
-                if (q.delante != NULL){
-                    mostrarCola(q);
-                }
-                else
-                    cout << "\n\n\tCola vacia...!" << endl;
-                break;
-
-            case 4:
-
-                vaciarCola(q);
-                cout << "\n\n\t\tHecho...\n\n";
-                break;
-            }
-
-            cout << endl
-                 << endl;
-            // system("clear");
-
-        } while (op != 5);
-
-        cout << "hola mundo" << endl;
-    }
-
-    void procesarOpciones()
-    {
-        int x;
-        while (x != 10)
-        {
-            menuPrincipal();
-
-            cin >> x;
-            if(x == 1) {
-                procesarPila();
-            }
-
-            else if(x == 2) {
-                procesarCola();
-            }
-        }
-    }
+struct cola {
+    int dato;
+    nodo *siguiente;
 };
+
+typedef struct nodo *PLista,*Carrito,*Cliente,clienteDespachado;
+//Instancias Globales
+Cliente cliente=NULL;
+Carrito carrito=NULL;
+int idCliente = 0, idCarrito;
+int carritoAsignado = 0;
+
+void mostrar_clientes(Cliente q);
+
+void menuCliente(void){
+
+    cout<<"\t\t[    REGISTRO DE CLIENTE    ]\n";
+    cout<<"\t\t----------------------------\n\n";
+    cout<<" 1. REGISTRAR PACIENTE                          "<<endl;
+    cout<<" 2. ELIMINAR DATOS DE PACIENTE                  "<<endl;
+    cout<<" 3. ACTUALIZAR PACIENTES                        "<<endl;
+    cout<<" 4. MOSTRAR LISTADO                             "<<endl;
+    cout<<" 5. TOMAR UN CARRITO                            "<<endl;
+    cout<<" 6. SALIR                                       "<<endl;
+
+    cout<<"\n Ingrese opcion : ";
+}
+
+void menuCaja(void){
+
+    cout<<"\t\t[    REGISTRO DE CAJA    ]\n";
+    cout<<"\t\t----------------------------\n\n";
+    cout<<" 1. REGISTRAR PACIENTE                          "<<endl;
+    cout<<" 2. ELIMINAR DATOS DE PACIENTE                  "<<endl;
+    cout<<" 3. ACTUALIZAR PACIENTES                        "<<endl;
+    cout<<" 4. MOSTRAR LISTADO                             "<<endl;
+    cout<<" 5. COPIAR DATOS DE UN PACIENTE A OTRO          "<<endl;
+    cout<<" 6. SALIR                                       "<<endl;
+
+    cout<<"\n Ingrese opcion : ";
+}
+
+void menuCarrito(void){
+
+    cout<<"\t\t[    REGISTRO DE CARRITO    ]\n";
+    cout<<"\t\t----------------------------\n\n";
+    cout<<" 1. REGISTRAR CARRITO                          "<<endl;
+    cout<<" 2. ELIMINAR DATOS DE PACIENTE                  "<<endl;
+    cout<<" 3. ACTUALIZAR CARRITO                        "<<endl;
+    cout<<" 4. MOSTRAR LISTADO                             "<<endl;
+    cout<<" 4. MOSTRAR LISTADO                             "<<endl;
+    cout<<" 5. SALIR                                       "<<endl;
+
+    cout<<"\n Ingrese opcion : ";
+}
+/*--------------------- FUNCION MENU PRINCIPAL --------------------*/
+
+
+
+/*----------------- CUNCION PARA ACTUALIZAR UN DATO---------------*/
+void menu_actualizar(void){
+
+    cout<<"\n\t\t[    ESPECIFIQUE CAMPO A ACTUALIZAR    ]\n";
+    cout<<"\t\t----------------------------\n\n";
+    cout<<" 1. NOMBRES                       "<<endl;
+    cout<<" 2. APELLIDOS                     "<<endl;
+    cout<<" 3. DIRECCION                     "<<endl;
+    cout<<" 4. TELEFONO                      "<<endl;
+    cout<<" 5. SALIR                         "<<endl;
+
+    cout<<"\n Ingrese opcion : ";
+}
+
+
+/*-------------------- FUNCION REGISTRAR PACIENTES ------------------*/
+void registrar_cliente(Cliente &lista){
+
+    Cliente t,q = new(struct nodo);
+    idCliente++;
+    cout<<"\n\n\t\t[  REGISTRO  ]\n";
+    cout<<"\n\tDATOS DEL PACIENTE ";
+    q->codigo = idCliente;
+    cin.ignore();cout<<"\n\tNOMBRES:"; getline(cin,q->nombre);
+
+    q->sgte = NULL;
+
+    if(lista==NULL){
+        lista = q;
+    } else {
+        t = lista;
+        while(t->sgte!=NULL){
+                t = t->sgte;
+        }
+        t->sgte = q;
+    }
+}
+
+void registrar_carrito(Carrito &lista){
+
+    Carrito t,q = new(struct nodo);
+    idCarrito++;
+    cout<<"\n\n\t\t[  REGISTRO  ]\n";
+    q->codigo = idCarrito;
+    q->nombre = "#" + to_string(idCarrito);
+    q->estado = "Disponible";
+
+    q->sgte = NULL;
+
+    if(lista==NULL){
+        lista = q;
+    } else {
+        t = lista;
+        while(t->sgte!=NULL){
+                t = t->sgte;
+        }
+        t->sgte = q;
+    }
+    cout <<"Registro Carrito: [" << q->nombre << "]"<<endl;
+}
+
+/*------------------------ FUNCIONES ELIMINAR PACIENTE ---------------------*/
+void eliminar_cliente(Cliente &lista){
+    int cod;
+    Cliente q,t;
+    q=lista;
+
+    cout<<"\n\n\n\tELIMINAR UN PACIENTE";
+    cout<<"\n\n\tINGRESE CODIGO:"; cin>>cod;
+
+    while(q!=NULL){
+
+            if(q->codigo==cod){
+
+                if(q==lista)
+                    lista=lista->sgte;
+
+                else
+                    t->sgte=q->sgte;
+
+                delete(q);
+
+                cout<<"\n\n\tREGISTRO ELIMINADO...!!!!!\n";
+
+                return;
+
+            }else {
+
+                t=q;
+                q=q->sgte;
+
+        }
+
+    }
+    if(q==NULL)
+        cout<<"\n\tCODIGO INCORRECTO...!!\n";
+
+}
+
+void eliminar_carrito(Carrito &lista){
+    int cod;
+    Carrito q,t;
+    q=lista;
+
+    cout<<"\n\n\n\tELIMINAR UN CLIENTE";
+    cout<<"\n\n\tINGRESE CODIGO:"; cin>>cod;
+
+    while(q!=NULL){
+
+            if(q->codigo==cod){
+
+                if(q==lista)
+                    lista=lista->sgte;
+
+                else
+                    t->sgte=q->sgte;
+
+                delete(q);
+
+                cout<<"\n\n\tREGISTRO ELIMINADO...!!!!!\n";
+
+                return;
+
+            }else {
+
+                t=q;
+                q=q->sgte;
+
+        }
+
+    }
+    if(q==NULL)
+        cout<<"\n\tCODIGO INCORRECTO...!!\n";
+}
+
+void seleccionar_carritoAcliente(Cliente listaCliente, Carrito listaCarrito) {
+    int cod, x;
+    Cliente c;
+    Carrito k;
+
+    bool disponible = false;
+    c = listaCliente;
+    k = listaCarrito;
+    
+    mostrar_clientes(cliente);
+
+    cout << "seleccione el cod. del cliente";
+    cin >> cod;
+
+    //aumenta el carrito disponible
+    int carritoDisponible = 1;
+
+    while(k!=NULL){
+
+        if((carritoDisponible < idCarrito) && k->estado == "Disponible") {
+
+            if(k->codigo==cod) {
+                cout<<"\n\tCARRITO ASIGNADO   ";
+                cout<<"\n\t--------------------";
+                cout<<"\n\n\tCODIGO   : "<<k->codigo<<"\tNOMBRES  : "<<k->nombre<<"\t"<<endl;
+
+                k->estado = "Ocupado";
+                carritoAsignado++;
+                disponible = true;
+                cout<<"\n\n\tREGISTRO ACTUALIZADO...!!!!!\n";
+
+                break;
+            } else {
+            k=k->sgte;
+            }
+        }
+        carritoDisponible++;
+    }
+    if(k==NULL)
+        cout<<"\n\tCODIGO INCORRECTO...!!\n";
+
+    if(disponible) {
+        while(c!=NULL){
+            if(c->codigo==idCliente){
+                c->estado = "Comprando";
+                return;
+            }
+            else {
+                c=c->sgte;
+            }
+        }
+    }
+}
+
+
+/*-------------------- FUNCIONES ACTUALIZAR -------------------*/
+void actualizar_cliente(Cliente lista){
+
+    int cod, x;
+    Cliente q;
+    q=lista;
+
+    while(q!=NULL){
+
+            if(q->codigo==cod){
+                cout<<"\n\tDATOS DEL PACIENTE  ";
+                cout<<"\n\t--------------------";
+                cout<<"\n\n\tCODIGO   : "<<q->codigo<<endl;
+                cout<<"\n\tNOMBRES  : "<<q->nombre<<endl;
+
+                menu_actualizar();
+                cin>>x;
+
+                switch(x){
+
+                    case 1: cout<<"\n\n\tINGRESE NOMBRES:";
+                            cin.ignore(); getline(cin,q->nombre);
+                            break;
+
+                    default: cout<<"\nINGRESE UNA OPCION VALIDA...\n"; break;
+
+                }
+                cout<<"\n\n\tREGISTRO ACTUALIZADO...!!!!!\n";
+
+                return;
+
+            }else {
+
+
+                q=q->sgte;
+
+        }
+
+    }
+    if(q==NULL)
+        cout<<"\n\tCODIGO INCORRECTO...!!\n";
+}
+
+void actualizar_carrito(Carrito lista){
+
+    int cod, x;
+    Carrito q;
+    q=lista;
+
+    cout<<"\n\n\n\tACTUALIZAR REGISTRO DE PACIENTE";
+    cout<<"\n\n\tINGRESE CODIGO:"; cin>>cod;
+
+    while(q!=NULL){
+
+            if(q->codigo==cod){
+                cout<<"\n\tDATOS DEL PACIENTE  ";
+                cout<<"\n\t--------------------";
+                cout<<"\n\n\tCODIGO   : "<<q->codigo<<endl;
+                cout<<"\n\tNOMBRES  : "<<q->nombre<<endl;
+
+                menu_actualizar();
+                cin>>x;
+
+                switch(x){
+
+                    case 1: cout<<"\n\n\tINGRESE NOMBRES:";
+                            cin.ignore(); getline(cin,q->nombre);
+                            break;
+
+                    default: cout<<"\nINGRESE UNA OPCION VALIDA...\n"; break;
+
+                }
+                cout<<"\n\n\tREGISTRO ACTUALIZADO...!!!!!\n";
+
+                return;
+
+            }else {
+
+
+                q=q->sgte;
+
+        }
+
+    }
+    if(q==NULL)
+        cout<<"\n\tCODIGO INCORRECTO...!!\n";
+}
+
+
+/*---------------------- FUNCIONES MOSTRAR -------------------*/
+void mostrar_clientes(Cliente q){
+
+    int i=1;
+
+    cout<<"DATOS DE LOS CARRITOS "<<endl;
+    cout<<"CODIGO \t    NOMBRE \t"<<"Estado"<<endl;
+    
+
+    while(q!=NULL){
+        cout << q->codigo <<setw(20)<< q->nombre <<setw(20)<<q->estado<< endl;
+        q=q->sgte;
+
+        i++;
+    }
+}
+
+void mostrar_carritos(Carrito q){
+    int i=1;
+    cout<<"DATOS DE LOS CARRITOS "<<endl;
+    cout<<"CODIGO \t    NOMBRE \t"<<"ESTADO"<<endl;
+    
+
+    while(q!=NULL){
+        cout << q->codigo <<setw(20)<< "carrito"+ q->nombre <<setw(20)<<q->estado<< endl;
+        q=q->sgte;
+
+        i++;
+    }
+}
+
+
+/*------------------------- FUNCION PRINCIPAL -------------------*/
+int procesarCliente(void){
+    int opcion;
+
+    do{
+            menuCliente();
+            cin>>opcion;
+
+            switch(opcion){
+
+                case 1: registrar_cliente(cliente);
+                        break;
+
+                case 2: if(cliente==NULL){
+                            cout<<"\n\tNo Hay Clientes Registrados.....!!!!\n";
+                        }else{
+                            eliminar_cliente(cliente);
+                        }
+                        break;
+
+                case 3: if(cliente==NULL){
+                            cout<<"\n\tNo Hay Clientes Registrados.....!!!!\n";
+                        }else{
+                            actualizar_cliente(cliente);
+                        }
+                        break;
+
+                case 4: if(cliente==NULL){
+                            cout<<"\n\tNo Hay Clientes Registrados.....!!!!\n";
+                        }else {
+                            mostrar_clientes(cliente);
+                        }
+                        break;
+
+                case 5: if(cliente==NULL){
+                            cout<<"\n\tNo Hay Clientes Registrados.....!!!!\n";
+                        } if(carrito == NULL) {
+                            cout<<"\n\tNo Hay Carritos Registrados.....!!!!\n";
+
+                        }else {
+                            seleccionar_carritoAcliente(cliente, carrito);
+                        }
+                        break;
+
+                case 6: return 0;
+
+                default: cout<<"\nINGRESE UNA OPCION VALIDA...\n"; break;
+
+            }
+
+        }while(opcion!=6);
+
+    return 0;
+}
+int procesarCarrito(void){
+
+    int opcion;
+
+    do{
+            menuCarrito();
+            cin>>opcion;
+
+            switch(opcion){
+
+                case 1: registrar_carrito(carrito);
+                        break;
+
+                case 2: if(cliente==NULL){
+                            cout<<"\n\tNo Hay Pacientes Registrados.....!!!!\n";
+                        }else{
+                            eliminar_carrito(carrito);
+                        }
+                        break;
+
+                case 3: if(cliente==NULL){
+                            cout<<"\n\tNo Hay Pacientes Registrados.....!!!!\n";
+                        }else{
+                            actualizar_carrito(carrito);
+                        }
+                        break;
+
+                case 4: if(carrito==NULL){
+                            cout<<"\n\tNo Hay Pacientes Registrados.....!!!!\n";
+                        }else {
+                            mostrar_carritos(carrito);
+                        }
+                        break;
+
+                case 5: return 0;
+
+
+                default: cout<<"\nINGRESE UNA OPCION VALIDA...\n"; break;
+
+            }
+
+        }while(opcion!=5);
+
+    return 0;
+}
+
+void procesarTodo() {
+    string menu = "**********[MENU]**********\n1. [LISTA CARRITOS  ]\n2. [COLA DE CAJAS   ]\n3. [LISTA DE CLIENTES ]\n4. [ LISTA DE PRODUCTOS ]\n5. [        SALIR       ]\n";
+    int opt;
+
+    do{
+        cout <<menu<< "Seleccione una opcion: ";
+        cin >> opt;
+
+        switch (opt)
+        {
+        case 1: 
+            procesarCarrito();
+            break;
+        
+        case 2:
+            procesarCliente();
+            break;
+
+        case 3:
+            procesarCliente();
+            break;
+
+
+        case 4:
+            menuCliente();
+            break;
+        }
+    }while (opt != 5);
+
+    cout << "salio" <<endl;
+}
 
 int main(int argc, char const *argv[])
 {
-    Cola cola;
-    cola.procesarOpciones();
+    system("clear");
+    procesarTodo();
+    
     return 0;
 }

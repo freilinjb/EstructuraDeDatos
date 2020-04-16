@@ -16,15 +16,17 @@ struct nodo{
 };
 
 struct cola {
-    int dato;
-    nodo *siguiente;
+    nodo *delante;
+    nodo *atras;
 };
 
 typedef struct nodo *PLista,*Carrito,*Cliente,clienteDespachado;
 //Instancias Globales
 Cliente cliente=NULL;
 Carrito carrito=NULL;
-int idCliente = 0, idCarrito;
+struct cola q;
+
+int idCliente = 0, idCarrito = 0, idCaja = 0;
 int carritoAsignado = 0;
 
 void mostrar_clientes(Cliente q);
@@ -33,9 +35,9 @@ void menuCliente(void){
 
     cout<<"\t\t[    REGISTRO DE CLIENTE    ]\n";
     cout<<"\t\t----------------------------\n\n";
-    cout<<" 1. REGISTRAR PACIENTE                          "<<endl;
-    cout<<" 2. ELIMINAR DATOS DE PACIENTE                  "<<endl;
-    cout<<" 3. ACTUALIZAR PACIENTES                        "<<endl;
+    cout<<" 1. REGISTRAR CLIENTE                          "<<endl;
+    cout<<" 2. ELIMINAR DATOS DE CLIENTE                  "<<endl;
+    cout<<" 3. ACTUALIZAR CLIENTE                        "<<endl;
     cout<<" 4. MOSTRAR LISTADO                             "<<endl;
     cout<<" 5. TOMAR UN CARRITO                            "<<endl;
     cout<<" 6. SALIR                                       "<<endl;
@@ -47,12 +49,11 @@ void menuCaja(void){
 
     cout<<"\t\t[    REGISTRO DE CAJA    ]\n";
     cout<<"\t\t----------------------------\n\n";
-    cout<<" 1. REGISTRAR PACIENTE                          "<<endl;
-    cout<<" 2. ELIMINAR DATOS DE PACIENTE                  "<<endl;
-    cout<<" 3. ACTUALIZAR PACIENTES                        "<<endl;
-    cout<<" 4. MOSTRAR LISTADO                             "<<endl;
-    cout<<" 5. COPIAR DATOS DE UN PACIENTE A OTRO          "<<endl;
-    cout<<" 6. SALIR                                       "<<endl;
+    cout<<" 1. REGISTRAR (ENCOLAR) CAJA    "<<endl;
+    cout<<" 2. ELIMINAR (DESENCOLAR) CAJA  "<<endl;
+    cout<<" 3. MOSTRAR COLA                "<<endl;
+    cout<<" 4. VACIAR COLA                 "<<endl;
+    cout<<" 5. SALIR                       "<<endl;
 
     cout<<"\n Ingrese opcion : ";
 }
@@ -62,40 +63,22 @@ void menuCarrito(void){
     cout<<"\t\t[    REGISTRO DE CARRITO    ]\n";
     cout<<"\t\t----------------------------\n\n";
     cout<<" 1. REGISTRAR CARRITO                          "<<endl;
-    cout<<" 2. ELIMINAR DATOS DE PACIENTE                  "<<endl;
+    cout<<" 2. ELIMINAR DATOS DE CARRITO                  "<<endl;
     cout<<" 3. ACTUALIZAR CARRITO                        "<<endl;
-    cout<<" 4. MOSTRAR LISTADO                             "<<endl;
     cout<<" 4. MOSTRAR LISTADO                             "<<endl;
     cout<<" 5. SALIR                                       "<<endl;
 
     cout<<"\n Ingrese opcion : ";
 }
-/*--------------------- FUNCION MENU PRINCIPAL --------------------*/
 
 
-
-/*----------------- CUNCION PARA ACTUALIZAR UN DATO---------------*/
-void menu_actualizar(void){
-
-    cout<<"\n\t\t[    ESPECIFIQUE CAMPO A ACTUALIZAR    ]\n";
-    cout<<"\t\t----------------------------\n\n";
-    cout<<" 1. NOMBRES                       "<<endl;
-    cout<<" 2. APELLIDOS                     "<<endl;
-    cout<<" 3. DIRECCION                     "<<endl;
-    cout<<" 4. TELEFONO                      "<<endl;
-    cout<<" 5. SALIR                         "<<endl;
-
-    cout<<"\n Ingrese opcion : ";
-}
-
-
-/*-------------------- FUNCION REGISTRAR PACIENTES ------------------*/
+/*-------------------- FUNCION REGISTRAR CLIENTE ------------------*/
 void registrar_cliente(Cliente &lista){
 
     Cliente t,q = new(struct nodo);
     idCliente++;
     cout<<"\n\n\t\t[  REGISTRO  ]\n";
-    cout<<"\n\tDATOS DEL PACIENTE ";
+    cout<<"\n\tDATOS DEL CLIENTE ";
     q->codigo = idCliente;
     cin.ignore();cout<<"\n\tNOMBRES:"; getline(cin,q->nombre);
 
@@ -135,13 +118,23 @@ void registrar_carrito(Carrito &lista){
     cout <<"Registro Carrito: [" << q->nombre << "]"<<endl;
 }
 
-/*------------------------ FUNCIONES ELIMINAR PACIENTE ---------------------*/
+/*----------------- CUNCION PARA ACTUALIZAR UN DATO---------------*/
+void menu_actualizar(void){
+
+    cout<<"\n\t\t[    ESPECIFIQUE CAMPO A ACTUALIZAR    ]\n";
+    cout<<"\t\t----------------------------\n\n";
+    cout<<" 1. NOMBRE                       "<<endl;
+
+    cout<<"\n Ingrese opcion : ";
+}
+
+/*------------------------ FUNCIONES ELIMINAR CLIENTE ---------------------*/
 void eliminar_cliente(Cliente &lista){
     int cod;
     Cliente q,t;
     q=lista;
 
-    cout<<"\n\n\n\tELIMINAR UN PACIENTE";
+    cout<<"\n\n\n\tELIMINAR UN CLIENTE";
     cout<<"\n\n\tINGRESE CODIGO:"; cin>>cod;
 
     while(q!=NULL){
@@ -220,7 +213,7 @@ void seleccionar_carritoAcliente(Cliente listaCliente, Carrito listaCarrito) {
     
     mostrar_clientes(cliente);
 
-    cout << "seleccione el cod. del cliente";
+    cout << "seleccione el cod. del cliente: ";
     cin >> cod;
 
     //aumenta el carrito disponible
@@ -274,7 +267,7 @@ void actualizar_cliente(Cliente lista){
     while(q!=NULL){
 
             if(q->codigo==cod){
-                cout<<"\n\tDATOS DEL PACIENTE  ";
+                cout<<"\n\tDATOS DEL CLIENTE  ";
                 cout<<"\n\t--------------------";
                 cout<<"\n\n\tCODIGO   : "<<q->codigo<<endl;
                 cout<<"\n\tNOMBRES  : "<<q->nombre<<endl;
@@ -313,13 +306,12 @@ void actualizar_carrito(Carrito lista){
     Carrito q;
     q=lista;
 
-    cout<<"\n\n\n\tACTUALIZAR REGISTRO DE PACIENTE";
     cout<<"\n\n\tINGRESE CODIGO:"; cin>>cod;
 
     while(q!=NULL){
 
             if(q->codigo==cod){
-                cout<<"\n\tDATOS DEL PACIENTE  ";
+                cout<<"\n\tDATOS DEL CARRITO  ";
                 cout<<"\n\t--------------------";
                 cout<<"\n\n\tCODIGO   : "<<q->codigo<<endl;
                 cout<<"\n\tNOMBRES  : "<<q->nombre<<endl;
@@ -352,7 +344,6 @@ void actualizar_carrito(Carrito lista){
         cout<<"\n\tCODIGO INCORRECTO...!!\n";
 }
 
-
 /*---------------------- FUNCIONES MOSTRAR -------------------*/
 void mostrar_clientes(Cliente q){
 
@@ -382,6 +373,60 @@ void mostrar_carritos(Carrito q){
 
         i++;
     }
+}
+
+/*--------------------- COLAS FUNCIONES ---------------------*/
+void encolarCaja(struct cola &q, string dato) {
+    struct nodo *aux = new(struct nodo);
+
+      aux->nombre = dato;
+     aux->sgte = NULL;
+     
+     if( q.delante == NULL)
+         q.delante = aux;   // encola el primero elemento
+     else
+         (q.atras)->sgte = aux;
+         
+     q.atras = aux;
+}
+
+string desencolarCaja( struct cola &q ) {
+     string dato ;
+     struct nodo *aux ;
+     
+     aux = q.delante;      // aux apunta al inicio de la cola
+     dato = aux->nombre;
+     q.delante = (q.delante)->sgte;
+     delete(aux);          // libera memoria a donde apuntaba aux
+     
+     return dato;
+}
+
+void muestraCola( struct cola q ) {
+     struct nodo *aux;
+     
+     aux = q.delante;
+    cout << "CAJA" << endl;
+     while( aux != NULL )
+     {
+            cout<<"   "<< aux->nombre <<endl;
+            aux = aux->sgte;
+     }    
+}
+
+void vaciarCola( struct cola &q)
+{
+     struct nodo *aux;
+     
+     while( q.delante != NULL)
+     {
+            aux = q.delante;
+            q.delante = aux->sgte;
+            delete(aux);
+     }
+     q.delante = NULL;
+     q.atras   = NULL;
+     
 }
 
 
@@ -453,21 +498,21 @@ int procesarCarrito(void){
                         break;
 
                 case 2: if(cliente==NULL){
-                            cout<<"\n\tNo Hay Pacientes Registrados.....!!!!\n";
+                            cout<<"\n\tNo Hay Carritos Registrados.....!!!!\n";
                         }else{
                             eliminar_carrito(carrito);
                         }
                         break;
 
                 case 3: if(cliente==NULL){
-                            cout<<"\n\tNo Hay Pacientes Registrados.....!!!!\n";
+                            cout<<"\n\tNo Hay Carritos Registrados.....!!!!\n";
                         }else{
                             actualizar_carrito(carrito);
                         }
                         break;
 
                 case 4: if(carrito==NULL){
-                            cout<<"\n\tNo Hay Pacientes Registrados.....!!!!\n";
+                            cout<<"\n\tNo Hay Carritos Registrados.....!!!!\n";
                         }else {
                             mostrar_carritos(carrito);
                         }
@@ -485,8 +530,42 @@ int procesarCarrito(void){
     return 0;
 }
 
+void procesarCaja() {
+    int op;
+
+    do{
+            menuCaja();
+            cin>>op;
+
+            switch(op){
+
+                case 1: idCaja++;
+                        encolarCaja( q, "Caja: #"+to_string(idCaja));
+                        cout<<"\t\t" << "Caja: #"+to_string(idCaja) << " encolado..."<<endl;
+                    break;
+
+                case 2: cout<<"\t\tNumero "<< desencolarCaja( q ) <<" desencolado..."<<endl;
+                    break; 
+
+                
+                case 3: cout << "\n\n MOSTRANDO COLA\n\n";
+                        if(q.delante!=NULL) muestraCola( q );
+                        else   cout<<"\tCola vacia...!"<<endl;
+                    break;    
+        
+                case 4: vaciarCola( q );
+                        cout<<"\t\tHecho..."<<endl;
+                    break;
+
+                default: cout<<"\nINGRESE UNA OPCION VALIDA...\n"; break;
+            }
+            cout<<endl;
+
+        }while(op!=5);
+}
+
 void procesarTodo() {
-    string menu = "**********[MENU]**********\n1. [LISTA CARRITOS  ]\n2. [COLA DE CAJAS   ]\n3. [LISTA DE CLIENTES ]\n4. [ LISTA DE PRODUCTOS ]\n5. [        SALIR       ]\n";
+    string menu = "**********[MENU]**********\n1. [LISTA CARRITOS  ]\n2. [COLA DE CAJAS   ]\n3. [LISTA DE CLIENTES ]\n4. [LISTA DE PRODUCTOS ]\n5. [SALIR       ]\n";
     int opt;
 
     do{
@@ -500,17 +579,13 @@ void procesarTodo() {
             break;
         
         case 2:
-            procesarCliente();
+            procesarCaja();
             break;
 
         case 3:
             procesarCliente();
             break;
 
-
-        case 4:
-            menuCliente();
-            break;
         }
     }while (opt != 5);
 
@@ -519,7 +594,20 @@ void procesarTodo() {
 
 int main(int argc, char const *argv[])
 {
+
+    for (int i = 0; i < 3; i++)
+    {
+        idCaja++;
+        encolarCaja( q, "Caja: #"+to_string(idCaja));
+    }
+    
+    for (int i = 0; i < 25; i++)
+    {
+        registrar_carrito(carrito);
+    }
+
     system("clear");
+    
     procesarTodo();
     
     return 0;
